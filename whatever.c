@@ -1,5 +1,10 @@
 /* hw6munshi.c
-* GPIO PINS:
+
+*
+* EXACT SAME thread/FIFO structure 
+* Only GPIO pins and motor direction logic changed to match our hardware
+*
+* OUR GPIO PINS:
 *   GPIO 05, 06  = left  motor direction (AI1, AI2)
 *   GPIO 22, 23  = right motor direction (BI1, BI2)
 *   GPIO 12      = left  motor PWM (DAT2)
@@ -13,7 +18,7 @@
 *   backward: pin1=CLR pin2=SET (GPIO05=0 GPIO06=1 for left)
 *   stop:     pin1=CLR pin2=CLR
 *
-* THREAD STRUCTURE
+* THREAD STRUCTURE 
 *   t1  KeyRead
 *   t2  LineTraceRight  (reads GPIO 25 right IR)
 *   t3  LineTraceLeft   (reads GPIO 24 left  IR)
@@ -127,7 +132,7 @@ struct left_speed_thread_param {
   bool*                    quit_flag;
 };
 
-// THREAD 1: KeyRead
+// ── THREAD 1: KeyRead 
 void* KeyRead(void* arg) {
   struct key_thread_param* param = (struct key_thread_param*)arg;
   struct thread_command cmd = { 0, 0 };
@@ -160,7 +165,7 @@ void* KeyRead(void* arg) {
   return NULL;
 }
 
-//THREADS 2,3: LineTrace - sends sensor state (1=black,0=white) every cycle
+// ── THREADS 2,3: LineTrace - sends sensor state (1=black,0=white) every cycle ─
 void* LineTrace(void* arg) {
   struct lineTrace_thread_param* param = (struct lineTrace_thread_param*)arg;
   struct thread_command cmd = { 0, 0 };
@@ -191,7 +196,7 @@ void* LineTrace(void* arg) {
   return NULL;
 }
 
-// THREAD 4: LineTraceControl - combines left+right sensor state into one code 
+// ── THREAD 4: LineTraceControl - combines left+right sensor state into one code ─
 // argument sent to lineTrace_control_fifo: bit1=left bit0=right (1=black,0=white)
 void* LineTraceControl(void* arg) {
   struct lineTrace_control_thread_param* param = (struct lineTrace_control_thread_param*)arg;
@@ -226,7 +231,7 @@ void* LineTraceControl(void* arg) {
   return NULL;
 }
 
-//THREAD 5: StateContro
+// ── THREAD 5: StateControl 
 void* StateControl(void* arg) {
   struct state_control_thread_param* param = (struct state_control_thread_param*)arg;
   struct thread_command cmd = { 0, 0 };
@@ -408,7 +413,7 @@ void* StateControl(void* arg) {
   return NULL;
 }
 
-// THREAD 6: MotorController 
+// ── THREAD 6: MotorController (same logic as friend, our GPIO directions) ────
 void* MotorController(void* arg) {
   struct motor_controller_thread_param* param = (struct motor_controller_thread_param*)arg;
   struct thread_command cmd1 = { 0, 0 };
@@ -443,7 +448,7 @@ void* MotorController(void* arg) {
           if (!(FIFO_FULL(param->left_speed_fifo)))  FIFO_INSERT(param->left_speed_fifo,  cmd2);
         } break;
 
-        case 119: {  // 'wforward: pin1=SET pin2=CLR
+        case 119: {  // 'w' forward -- our forward: pin1=SET pin2=CLR
           leftMotorDirection  = 102;  // 'f'
           rightMotorDirection = 102;
           cmd2.command = 102; cmd2.argument = 0;
@@ -453,7 +458,7 @@ void* MotorController(void* arg) {
           }
         } break;
 
-        case 120: {  // 'x' backward: pin1=CLR pin2=SET
+        case 120: {  // 'x' backward -- our backward: pin1=CLR pin2=SET
           leftMotorDirection  = 98;  // 'b'
           rightMotorDirection = 98;
           cmd2.command = 98; cmd2.argument = 0;
@@ -645,7 +650,7 @@ void* MotorController(void* arg) {
             new_right_speed = lineTraceSpeed / 2;
             last_dir = 2;
           } else {
-            // both white -> persist last direction (sharp correction) instead of going straight
+            // both white - last direction (sharp correction) instead of going straight /--> in v3 it was going straight don't add that
             if (last_dir == 1) {        // keep turning left
               new_left_speed  = lineTraceSpeed / 4;
               new_right_speed = lineTraceSpeed;
@@ -691,10 +696,10 @@ void* MotorController(void* arg) {
   return NULL;
 }
 
-// ── THREADS 7,8: TurnThread
-//  forward:  pin1=SET pin2=CLR  (GPIO05=1,GPIO06=0 for left)
-// backward: pin1=CLR pin2=SET  (GPIO05=0,GPIO06=1 for left)
-// stop:     pin1=CLR pin2=CLR
+// THREADS 7,8: TurnThread 
+// OUR forward:  pin1=SET pin2=CLR  (GPIO05=1,GPIO06=0 for left)
+// OUR backward: pin1=CLR pin2=SET  (GPIO05=0,GPIO06=1 for left)
+// OUR stop:     pin1=CLR pin2=CLR
 void* TurnThread(void* arg) {
   struct turn_thread_param* param = (struct turn_thread_param*)arg;
   struct thread_command cmd = { 0, 0 };
@@ -713,7 +718,7 @@ void* TurnThread(void* arg) {
             GPIO_CLR(io->gpio, (int)param->pin_number_1);
             GPIO_CLR(io->gpio, (int)param->pin_number_2);
           } break;
-          case 102: {  // 'f' forward: pin1=CLR pin2=SET ---working hw5 logic)
+          case 102: {  // 'f' forward: pin1=CLR pin2=SET (your working hw5 logic)
             GPIO_CLR(io->gpio, (int)param->pin_number_1);
             GPIO_SET(io->gpio, (int)param->pin_number_2);
           } break;
@@ -739,7 +744,7 @@ void* TurnThread(void* arg) {
   return NULL;
 }
 
-// THREAD 9: RightSpeedThread (DAT1 = right motor) 
+// ── THREAD 9: RightSpeedThread (DAT1 = right motor)
 void* RightSpeedThread(void* arg) {
   struct right_speed_thread_param* param = (struct right_speed_thread_param*)arg;
   struct thread_command cmd = { 0, 0 };
@@ -803,7 +808,7 @@ void* LeftSpeedThread(void* arg) {
   return NULL;
 }
 
-// main() 
+//main()
 int main(void) {
   struct io_peripherals* io;
   bool done = false;
@@ -908,6 +913,7 @@ int main(void) {
     pthread_create(&t10LeftTurn,      NULL, TurnThread,       (void*)&left_turn_param);
 
     pthread_join(t1Key,            NULL);
+    pthread_join(t2LineTraceRight, NULL);
     pthread_join(t3LineTraceLeft,  NULL);
     pthread_join(t4LineTraceControl,NULL);
     pthread_join(t5StateControl,   NULL);
