@@ -1,12 +1,33 @@
-/* latest working lidar */
 /*
- * lidar1.c -- hard black/white lidar display with startup calibration
+ * lidar1.c -- lidar plant detection, LED classification, change tracking
+ *
+ * Detection: 8x8 grid, fixed 5-inch (127 mm) threshold.
+ * Classification per frame (row voting):
+ *   DOUBLE = >=DOUBLE_VOTES_NEEDED rows show: 1s ... >=GAP_MIN zeros ... 1s
+ *   SINGLE = detection present, not double
+ *   EMPTY  = nothing detected
+ *
+ * CHANGE TRACKING (for judged runs):
+ *   A new classification must hold for STABLE_FRAMES consecutive
+ *   frames before it registers (debounce -- ignores mid-swap flicker).
+ *   Every registered change:
+ *     - updates live counters:  Empty / Single / Double detected
+ *     - is appended to a numbered on-screen history (first to last)
+ *     - is appended to detections.log with a timestamp
+ *
+ * LEDs (active HIGH): EMPTY->RED GPIO10, SINGLE->BLUE GPIO14,
+ *                     DOUBLE->GREEN GPIO15
+ * Window optional: runs headless over SSH; window appears when a
+ * display is available. Requires sudo.
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 #include <math.h>
 #include <cairo/cairo.h>
 #include <gtk/gtk.h>
@@ -14,6 +35,9 @@
 #include "pixel_format_RGB.h"
 #include "draw_bitmap_multiwindow.h"
 #include "wait_key.h"
+#include "../include/import_registers.h"
+#include "../include/gpio.h"
+#include "../include/io_peripherals.h"
 
 #define ARRAYSIZE(X) (sizeof(X) / sizeof((X)[0]))
 
@@ -24,6 +48,27 @@
 
 #define FILTER_DEPTH 4
 
+/* terminal layout */
+#define RAW_GRID_TOP   2
+#define BIN_GRID_TOP  12
+#define STATUS_ROW    (BIN_GRID_TOP + LIDAR_HEIGHT + 1)   /* 21 */
+#define COUNT_ROW     (STATUS_ROW)                        /* 21 */
+#define HIST_HDR_ROW  (COUNT_ROW + 2)                     /* 24 */
+#define HIST_TOP_ROW  (HIST_HDR_ROW + 1)                  /* 25 */
+#define HIST_SHOW     12    /* how many history lines stay visible */
+
+/* LED pins: one LED per pin, active high */
+#define LED_RED_GPIO    10   /* EMPTY  */
+#define LED_BLUE_GPIO   14   /* SINGLE */
+#define LED_GREEN_GPIO  15   /* DOUBLE */
+
+/* classification tuning */
+#define GAP_MIN              3
+#define DOUBLE_VOTES_NEEDED  3
+
+/* change tracking: frames a new state must hold before it registers */
+#define STABLE_FRAMES        3
+
 struct lidar_frame_row_t
 {
     unsigned int pixel[LIDAR_WIDTH];
@@ -33,7 +78,13 @@ struct lidar_frame_t
     struct lidar_frame_row_t row[LIDAR_HEIGHT];
 };
 
-/* read bytes from the file until newline or buffer_length is reached */
+static const char * state_text[3] =
+{
+  "EMPTY  -> RED",
+  "SINGLE -> BLUE",
+  "DOUBLE -> GREEN"
+};
+
 void my_getline(
     FILE * file,
     char * buffer,
@@ -47,7 +98,7 @@ void my_getline(
 
   if (file == NULL)
   {
-    return;   /* nothing to read from; leave buffer empty */
+    return;
   }
 
   read = getline( &line, &len, file );
@@ -80,8 +131,6 @@ void draw_block(
   return;
 }
 
-/* Hard threshold color: distance at or nearer than threshold => BLACK (plant),
- * anything farther => WHITE (background). */
 void calculate_color(
     struct pixel_format_RGB * color,
     size_t                    threshold,
@@ -91,11 +140,11 @@ void calculate_color(
 
   if (value <= threshold)
   {
-    gray = 0;     /* close -> black (plant detected) */
+    gray = 0;
   }
   else
   {
-    gray = 255;   /* far   -> white (background)     */
+    gray = 255;
   }
 
   color->R = gray;
@@ -111,16 +160,13 @@ void filter_lidar_data(
     struct lidar_frame_t *  newest_frame,
     struct lidar_frame_t *  filtered_frame )
 {
-  /* age the history */
   for (size_t i = 1; i < history_depth; i++)
   {
     lidar_frame_history[i-1] = lidar_frame_history[i];
   }
 
-  /* add new history entry */
   lidar_frame_history[history_depth-1] = *newest_frame;
 
-  /* simple averaging filter */
   for (size_t row = 0; row < ARRAYSIZE(filtered_frame->row); row++)
   {
     for (size_t column = 0; column < ARRAYSIZE(filtered_frame->row[row].pixel); column++)
@@ -135,63 +181,138 @@ void filter_lidar_data(
   }
 }
 
-/* One-time startup calibration with EMPTY slot. */
-#define BASELINE_FRAMES   8
-#define BASELINE_MARGIN   150   /* mm */
-
-unsigned int calibrate_baseline( FILE * serial_handle )
+/* classify one row: 0=empty, 1=single, 2=double */
+static int classify_row(
+    struct lidar_frame_row_t * row,
+    unsigned int               threshold )
 {
-  unsigned long sum      = 0;
-  unsigned int  count    = 0;
-  int           done     = 0;
-  int           attempts = 0;
+  bool seen_first = false;
+  int  gap_run    = 0;
+  bool gap_ok     = false;
+  bool any        = false;
 
-  if (serial_handle == NULL)
+  for (int c = 0; c < LIDAR_WIDTH; c++)
   {
-    return 127;   /* no serial; fixed 5-inch fallback */
-  }
+    bool detected = (row->pixel[c] <= threshold);
 
-  printf( "Calibrating -- aim sensor at EMPTY slot, press Enter...\n" );
-  getchar();
-
-  while (done < BASELINE_FRAMES)
-  {
-    char *  ln   = NULL;
-    size_t  len  = 0;
-    ssize_t read;
-
-    read = getline( &ln, &len, serial_handle );
-    if ((read <= 0) || (ln == NULL))
+    if (detected)
     {
-      free( ln );
-      attempts++;
-      if (attempts > 1000) { break; }
-      continue;
-    }
-
-    if ((ln[0] == 'y') && (ln[1] >= '0') && (ln[1] <= '7') && (read > 3))
-    {
-      unsigned int v[8] = {4000,4000,4000,4000,4000,4000,4000,4000};
-      sscanf( &ln[3], "%u,%u,%u,%u,%u,%u,%u,%u",
-              &v[0],&v[1],&v[2],&v[3],&v[4],&v[5],&v[6],&v[7] );
-      for (int c = 0; c < 8; c++)
+      any = true;
+      if (seen_first && gap_ok)
       {
-        if (v[c] < 4000) { sum += v[c]; count++; }
+        return 2;
       }
-      if (ln[1] == '7') { done++; }
+      seen_first = true;
+      gap_run    = 0;
     }
-    free( ln );
-
-    attempts++;
-    if (attempts > 1000) { break; }
+    else if (seen_first)
+    {
+      gap_run++;
+      if (gap_run >= GAP_MIN)
+      {
+        gap_ok = true;
+      }
+    }
   }
 
-  unsigned int baseline  = count ? (unsigned int)(sum / count) : 1000;
-  unsigned int threshold = (baseline > BASELINE_MARGIN)
-                            ? (baseline - BASELINE_MARGIN)
-                            : baseline / 2;
-  printf( "Baseline: %u mm  threshold set to: %u mm\n", baseline, threshold );
-  return threshold;
+  if (!any) { return 0; }
+  return 1;
+}
+
+/* classify the whole frame by voting across all 8 rows */
+int classify_frame(
+    struct lidar_frame_t * frame,
+    unsigned int           threshold )
+{
+  int votes[3] = { 0, 0, 0 };
+
+  for (int r = 0; r < LIDAR_HEIGHT; r++)
+  {
+    votes[ classify_row( &frame->row[r], threshold ) ]++;
+  }
+
+  if (votes[2] >= DOUBLE_VOTES_NEEDED) { return 2; }
+  if (votes[1] + votes[2] > 0)         { return 1; }
+  return 0;
+}
+
+/* light exactly one LED */
+void set_leds(
+    struct io_peripherals * io,
+    int                     classification )
+{
+  GPIO_CLR( io->gpio, LED_RED_GPIO );
+  GPIO_CLR( io->gpio, LED_BLUE_GPIO );
+  GPIO_CLR( io->gpio, LED_GREEN_GPIO );
+
+  if (classification == 0)
+  {
+    GPIO_SET( io->gpio, LED_RED_GPIO );
+  }
+  else if (classification == 1)
+  {
+    GPIO_SET( io->gpio, LED_BLUE_GPIO );
+  }
+  else
+  {
+    GPIO_SET( io->gpio, LED_GREEN_GPIO );
+  }
+}
+
+/* ------- change tracking state ------- */
+static int  counts[3]  = { 0, 0, 0 };            /* empty, single, double */
+static char history[HIST_SHOW][80];              /* rolling display list  */
+static int  history_used  = 0;                   /* lines currently held  */
+static int  total_changes = 0;                   /* numbering, 1..N       */
+
+/* register a confirmed state change: counters, history, screen, log file */
+static void register_change(
+    int    new_state,
+    FILE * log_file )
+{
+  time_t     now = time( NULL );
+  struct tm * tm = localtime( &now );
+
+  counts[new_state]++;
+  total_changes++;
+
+  /* roll the display history up if full */
+  if (history_used == HIST_SHOW)
+  {
+    for (int i = 1; i < HIST_SHOW; i++)
+    {
+      strcpy( history[i-1], history[i] );
+    }
+    history_used--;
+  }
+  snprintf( history[history_used], sizeof(history[0]),
+      "%3d. [%02d:%02d:%02d] %s",
+      total_changes, tm->tm_hour, tm->tm_min, tm->tm_sec,
+      state_text[new_state] );
+  history_used++;
+
+  /* redraw counters */
+  printf( "\x1B[%d;1HEmpty detected: %-4d Single detected: %-4d Double detected: %-4d\x1B[K",
+      COUNT_ROW, counts[0], counts[1], counts[2] );
+
+  /* redraw history list */
+  printf( "\x1B[%d;1H--- detection history (first to last) ---\x1B[K", HIST_HDR_ROW );
+  for (int i = 0; i < HIST_SHOW; i++)
+  {
+    printf( "\x1B[%d;1H%s\x1B[K",
+        HIST_TOP_ROW + i,
+        (i < history_used) ? history[i] : "" );
+  }
+  fflush( stdout );
+
+  /* append to the log file (never lost, even after scrolling) */
+  if (log_file != NULL)
+  {
+    fprintf( log_file, "%3d. [%02d:%02d:%02d] %s\n",
+        total_changes, tm->tm_hour, tm->tm_min, tm->tm_sec,
+        state_text[new_state] );
+    fflush( log_file );
+  }
 }
 
 int main( int argc, char ** argv )
@@ -199,6 +320,8 @@ int main( int argc, char ** argv )
   int                                       result;
   struct draw_bitmap_multiwindow_handle_t * bitmap_handle;
   FILE *                                    serial_handle;
+  FILE *                                    log_file;
+  struct io_peripherals *                   io;
   int                                       pressed_key;
   char                                      serial_line[1024];
   struct lidar_frame_t                      current_frame;
@@ -207,23 +330,50 @@ int main( int argc, char ** argv )
   struct pixel_format_RGB                   bitmap[LIDAR_WIDTH * PIXEL_WIDTH * LIDAR_HEIGHT * PIXEL_HEIGHT];
   struct pixel_format_RGB                   color;
 
+  /* debounce state */
+  int confirmed_state = -1;   /* -1 = nothing confirmed yet   */
+  int candidate_state = -1;   /* state currently being tested */
+  int candidate_count = 0;    /* consecutive frames it held   */
+
   memset( &current_frame,  0, sizeof(current_frame) );
   memset( frame_history,   0, sizeof(frame_history) );
   memset( &filtered_frame, 0, sizeof(filtered_frame) );
+
+  io = import_registers();
+  if (io == NULL)
+  {
+    printf( "could not map I/O registers (run with sudo)\n" );
+    return -1;
+  }
+
+  io->gpio->GPFSEL1.field.FSEL0 = GPFSEL_OUTPUT;   /* GPIO 10 red   */
+  io->gpio->GPFSEL1.field.FSEL4 = GPFSEL_OUTPUT;   /* GPIO 14 blue  */
+  io->gpio->GPFSEL1.field.FSEL5 = GPFSEL_OUTPUT;   /* GPIO 15 green */
+  GPIO_CLR( io->gpio, LED_RED_GPIO );
+  GPIO_CLR( io->gpio, LED_BLUE_GPIO );
+  GPIO_CLR( io->gpio, LED_GREEN_GPIO );
+
+  log_file = fopen( "detections.log", "a" );
 
   result = draw_bitmap_start( argc, argv );
   if (result == 0)
   {
     bitmap_handle = draw_bitmap_create_window( LIDAR_WIDTH * PIXEL_WIDTH, LIDAR_HEIGHT * PIXEL_HEIGHT );
-    if (bitmap_handle != NULL)
+    /* window is OPTIONAL: NULL handle = headless (SSH), everything else runs */
     {
       serial_handle = fopen( "/dev/ttyACM0", "r" );
       if (serial_handle != NULL)
       {
-        /* calibrate once at startup with empty slot */
-        unsigned int plant_threshold = 127;   /* fixed 5-inch threshold, no calibration */
+        unsigned int plant_threshold = 127;
 
-        while ( !draw_bitmap_window_closed( bitmap_handle ) &&
+        printf( "\x1B[2J\x1B[H\x1B[?25l" );
+        printf( "\x1B[%d;1H--- distance (mm) ---\x1B[K", RAW_GRID_TOP - 1 );
+        printf( "\x1B[%d;1H--- detection (1 = within 5 in) ---\x1B[K", BIN_GRID_TOP - 1 );
+        printf( "\x1B[%d;1HEmpty detected: 0    Single detected: 0    Double detected: 0\x1B[K", COUNT_ROW );
+        printf( "\x1B[%d;1H--- detection history (first to last) ---\x1B[K", HIST_HDR_ROW );
+        fflush( stdout );
+
+        while ( ((bitmap_handle == NULL) || !draw_bitmap_window_closed( bitmap_handle )) &&
                 !wait_key( 1, &pressed_key))
         {
           my_getline( serial_handle, serial_line, sizeof(serial_line) );
@@ -243,9 +393,8 @@ int main( int argc, char ** argv )
                 &current_frame.row[r].pixel[6],
                 &current_frame.row[r].pixel[7] );
 
-            /* raw distance grid, terminal rows 1-8 */
-            printf( "%c[%d;0H%d: %4u, %4u, %4u, %4u, %4u, %4u, %4u, %4u\n",
-                0x1B, r + 1, r,
+            printf( "\x1B[%d;1H%d: %4u %4u %4u %4u %4u %4u %4u %4u\x1B[K",
+                RAW_GRID_TOP + r, r,
                 current_frame.row[r].pixel[0],
                 current_frame.row[r].pixel[1],
                 current_frame.row[r].pixel[2],
@@ -255,16 +404,38 @@ int main( int argc, char ** argv )
                 current_frame.row[r].pixel[6],
                 current_frame.row[r].pixel[7] );
 
-            /* 0/1 detection grid, terminal rows 10-17 */
-            printf( "%c[%d;0H%d:", 0x1B, r + LIDAR_HEIGHT + 2, r );
+            printf( "\x1B[%d;1H%d:", BIN_GRID_TOP + r, r );
             for (int c = 0; c < LIDAR_WIDTH; c++)
             {
               printf( " %c", (current_frame.row[r].pixel[c] <= plant_threshold) ? '1' : '0' );
             }
-            printf( "\n" );
+            printf( "\x1B[K" );
+            fflush( stdout );
 
             if (r == (LIDAR_HEIGHT - 1))
             {
+              int frame_state = classify_frame( &current_frame, plant_threshold );
+
+              /* ---- debounce: state must hold STABLE_FRAMES frames ---- */
+              if (frame_state == candidate_state)
+              {
+                candidate_count++;
+              }
+              else
+              {
+                candidate_state = frame_state;
+                candidate_count = 1;
+              }
+
+              if ((candidate_count >= STABLE_FRAMES) &&
+                  (candidate_state != confirmed_state))
+              {
+                confirmed_state = candidate_state;
+                set_leds( io, confirmed_state );
+                register_change( confirmed_state, log_file );
+              }
+
+              /* black/white window (when a display exists) */
               filter_lidar_data( frame_history, FILTER_DEPTH, &current_frame, &filtered_frame );
 
               for (size_t row = 0; row < ARRAYSIZE(filtered_frame.row); row++)
@@ -286,14 +457,19 @@ int main( int argc, char ** argv )
                 }
               }
 
-              draw_bitmap_display( bitmap_handle, bitmap );
+              if (bitmap_handle != NULL)
+              {
+                draw_bitmap_display( bitmap_handle, bitmap );
+              }
             }
           }
           else
           {
-            ; /* throw out the partial line */
+            ;
           }
         }
+
+        printf( "\x1B[?25h\x1B[%d;1H\n", HIST_TOP_ROW + HIST_SHOW + 1 );
 
         fclose( serial_handle );
       }
@@ -302,11 +478,10 @@ int main( int argc, char ** argv )
         perror( "unable to open serial port /dev/ttyACM0" );
       }
 
-      draw_bitmap_close_window( bitmap_handle );
-    }
-    else
-    {
-      printf( "could not create window\n" );
+      if (bitmap_handle != NULL)
+      {
+        draw_bitmap_close_window( bitmap_handle );
+      }
     }
 
     draw_bitmap_stop();
@@ -315,6 +490,18 @@ int main( int argc, char ** argv )
   {
     printf( "could not start thread\n" );
   }
+
+  if (log_file != NULL)
+  {
+    fclose( log_file );
+  }
+
+  GPIO_CLR( io->gpio, LED_RED_GPIO );
+  GPIO_CLR( io->gpio, LED_BLUE_GPIO );
+  GPIO_CLR( io->gpio, LED_GREEN_GPIO );
+  io->gpio->GPFSEL1.field.FSEL0 = GPFSEL_INPUT;
+  io->gpio->GPFSEL1.field.FSEL4 = GPFSEL_INPUT;
+  io->gpio->GPFSEL1.field.FSEL5 = GPFSEL_INPUT;
 
   return 0;
 }
