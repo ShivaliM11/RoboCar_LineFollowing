@@ -1,3 +1,4 @@
+/* latest working lidar */
 /*
  * lidar1.c -- hard black/white lidar display with startup calibration
  */
