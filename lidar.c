@@ -3,20 +3,20 @@
  *
  * Detection: 8x8 grid, fixed 5-inch (127 mm) threshold.
  * Classification per frame (row voting):
- *   DOUBLE = >=DOUBLE_VOTES_NEEDED rows show: 1s ... >=GAP_MIN zeros ... 1s
- *   SINGLE = detection present, not double
- *   EMPTY  = nothing detected
+ * DOUBLE = >=DOUBLE_VOTES_NEEDED rows show: 1s ... >=GAP_MIN zeros ... 1s
+ * SINGLE = detection present, not double
+ * EMPTY  = nothing detected
  *
  * CHANGE TRACKING (for judged runs):
- *   A new classification must hold for STABLE_FRAMES consecutive
- *   frames before it registers (debounce -- ignores mid-swap flicker).
- *   Every registered change:
- *     - updates live counters:  Empty / Single / Double detected
- *     - is appended to a numbered on-screen history (first to last)
- *     - is appended to detections.log with a timestamp
+ * A new classification must hold for STABLE_FRAMES consecutive
+ * frames before it registers (debounce -- ignores mid-swap flicker).
+ * Every registered change:
+ * - updates live counters:  Empty / Single / Double detected
+ * - is appended to a numbered on-screen history (first to last)
+ * - is appended to detections.log with a timestamp
  *
  * LEDs (active HIGH): EMPTY->RED GPIO10, SINGLE->BLUE GPIO14,
- *                     DOUBLE->GREEN GPIO15
+ * DOUBLE->GREEN GPIO15
  * Window optional: runs headless over SSH; window appears when a
  * display is available. Requires sudo.
  */
@@ -63,7 +63,7 @@
 #define LED_GREEN_GPIO  15   /* DOUBLE */
 
 /* classification tuning */
-#define GAP_MIN              3
+#define GAP_MIN          3
 #define DOUBLE_VOTES_NEEDED  3
 
 /* change tracking: frames a new state must hold before it registers */
@@ -81,8 +81,8 @@ struct lidar_frame_t
 static const char * state_text[3] =
 {
   "EMPTY  -> RED",
-  "SINGLE -> BLUE",
-  "DOUBLE -> GREEN"
+  "SINGLE -> GREEN",
+  "DOUBLE -> BLUE"
 };
 
 void my_getline(
@@ -155,10 +155,10 @@ void calculate_color(
 }
 
 void filter_lidar_data(
-    struct lidar_frame_t *  lidar_frame_history,
+    struct lidar_frame_t * lidar_frame_history,
     size_t                  history_depth,
-    struct lidar_frame_t *  newest_frame,
-    struct lidar_frame_t *  filtered_frame )
+    struct lidar_frame_t * newest_frame,
+    struct lidar_frame_t * filtered_frame )
 {
   for (size_t i = 1; i < history_depth; i++)
   {
@@ -241,6 +241,8 @@ void set_leds(
     struct io_peripherals * io,
     int                     classification )
 {
+  /* independent active-HIGH LEDs: SET = on, CLR = off
+   * EMPTY -> RED (GPIO10), SINGLE -> GREEN (GPIO15), DOUBLE -> BLUE (GPIO14) */
   GPIO_CLR( io->gpio, LED_RED_GPIO );
   GPIO_CLR( io->gpio, LED_BLUE_GPIO );
   GPIO_CLR( io->gpio, LED_GREEN_GPIO );
@@ -251,11 +253,11 @@ void set_leds(
   }
   else if (classification == 1)
   {
-    GPIO_SET( io->gpio, LED_BLUE_GPIO );
+    GPIO_SET( io->gpio, LED_GREEN_GPIO );
   }
   else
   {
-    GPIO_SET( io->gpio, LED_GREEN_GPIO );
+    GPIO_SET( io->gpio, LED_BLUE_GPIO );
   }
 }
 
@@ -267,7 +269,7 @@ static int  total_changes = 0;                   /* numbering, 1..N       */
 
 /* register a confirmed state change: counters, history, screen, log file */
 static void register_change(
-    int    new_state,
+    int  new_state,
     FILE * log_file )
 {
   time_t     now = time( NULL );
@@ -319,16 +321,16 @@ int main( int argc, char ** argv )
 {
   int                                       result;
   struct draw_bitmap_multiwindow_handle_t * bitmap_handle;
-  FILE *                                    serial_handle;
-  FILE *                                    log_file;
-  struct io_peripherals *                   io;
+  FILE * serial_handle;
+  FILE * log_file;
+  struct io_peripherals * io;
   int                                       pressed_key;
   char                                      serial_line[1024];
   struct lidar_frame_t                      current_frame;
   struct lidar_frame_t                      frame_history[FILTER_DEPTH];
   struct lidar_frame_t                      filtered_frame;
-  struct pixel_format_RGB                   bitmap[LIDAR_WIDTH * PIXEL_WIDTH * LIDAR_HEIGHT * PIXEL_HEIGHT];
-  struct pixel_format_RGB                   color;
+  struct pixel_format_RGB                    bitmap[LIDAR_WIDTH * PIXEL_WIDTH * LIDAR_HEIGHT * PIXEL_HEIGHT];
+  struct pixel_format_RGB                    color;
 
   /* debounce state */
   int confirmed_state = -1;   /* -1 = nothing confirmed yet   */
@@ -346,12 +348,14 @@ int main( int argc, char ** argv )
     return -1;
   }
 
-  io->gpio->GPFSEL1.field.FSEL0 = GPFSEL_OUTPUT;   /* GPIO 10 red   */
-  io->gpio->GPFSEL1.field.FSEL4 = GPFSEL_OUTPUT;   /* GPIO 14 blue  */
-  io->gpio->GPFSEL1.field.FSEL5 = GPFSEL_OUTPUT;   /* GPIO 15 green */
-  GPIO_CLR( io->gpio, LED_RED_GPIO );
-  GPIO_CLR( io->gpio, LED_BLUE_GPIO );
-  GPIO_CLR( io->gpio, LED_GREEN_GPIO );
+  /* Clear function select bits for GPIO 10 (bits 0-2), 14 (bits 12-14), 15 (bits 15-17) in GPFSEL1 */
+  /* and replace them with 001 (Output Mode) using direct register math to avoid padding issues */
+  (*((volatile uint32_t *)&io->gpio->GPFSEL1)) &= ~( (7 << 0) | (7 << 12) | (7 << 15) );
+  (*((volatile uint32_t *)&io->gpio->GPFSEL1)) |= ( (1 << 0) | (1 << 12) | (1 << 15) );
+
+  GPIO_CLR( io->gpio, (1 << LED_RED_GPIO) );
+  GPIO_CLR( io->gpio, (1 << LED_BLUE_GPIO) );
+  GPIO_CLR( io->gpio, (1 << LED_GREEN_GPIO) );
 
   log_file = fopen( "detections.log", "a" );
 
@@ -469,7 +473,15 @@ int main( int argc, char ** argv )
           }
         }
 
-        printf( "\x1B[?25h\x1B[%d;1H\n", HIST_TOP_ROW + HIST_SHOW + 1 );
+        printf( "\x1B[?25h\x1B[%d;1H", HIST_TOP_ROW + HIST_SHOW + 1 );
+        printf( "==== STAND COUNT REPORT ====\n" );
+        printf( "S: %d, D: %d, E: %d\n", counts[1], counts[2], counts[0] );
+        if (log_file != NULL)
+        {
+          fprintf( log_file, "==== STAND COUNT REPORT ====\n" );
+          fprintf( log_file, "S: %d, D: %d, E: %d\n", counts[1], counts[2], counts[0] );
+          fflush( log_file );
+        }
 
         fclose( serial_handle );
       }
@@ -496,12 +508,12 @@ int main( int argc, char ** argv )
     fclose( log_file );
   }
 
-  GPIO_CLR( io->gpio, LED_RED_GPIO );
-  GPIO_CLR( io->gpio, LED_BLUE_GPIO );
-  GPIO_CLR( io->gpio, LED_GREEN_GPIO );
-  io->gpio->GPFSEL1.field.FSEL0 = GPFSEL_INPUT;
-  io->gpio->GPFSEL1.field.FSEL4 = GPFSEL_INPUT;
-  io->gpio->GPFSEL1.field.FSEL5 = GPFSEL_INPUT;
+  GPIO_CLR( io->gpio, (1 << LED_RED_GPIO) );
+  GPIO_CLR( io->gpio, (1 << LED_BLUE_GPIO) );
+  GPIO_CLR( io->gpio, (1 << LED_GREEN_GPIO) );
+  
+  /* Reset direction to input on exit */
+  (*((volatile uint32_t *)&io->gpio->GPFSEL1)) &= ~( (7 << 0) | (7 << 12) | (7 << 15) );
 
   return 0;
 }
