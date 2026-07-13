@@ -1,0 +1,533 @@
+ #include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdbool.h>
+#include <termios.h>
+#include <fcntl.h>
+#include <pthread.h>
+#include "../include/import_registers.h"
+#include "../include/cm.h"
+#include "../include/gpio.h"
+#include "../include/uart.h"
+#include "../include/spi.h"
+#include "../include/bsc.h"
+#include "../include/pwm.h"
+#include "../include/enable_pwm_clock.h"
+#include "../include/io_peripherals.h"
+#include "../include/wait_period.h"
+#include "../include/FIFO.h"
+#include "../include/MPU6050.h"
+#include "../include/MPU9250.h"
+#include "../include/wait_key.h"
+#include "keypress.h"
+
+// Program to have IR sensors detect black track on white paper
+// left front IR sensor: GPIO 24
+// right front IR sensor: GPIO 25
+
+void motor_stop(struct io_peripherals *io) {
+  GPIO_CLR(io->gpio, 05);   //stop left motor 
+  GPIO_CLR(io->gpio, 06);   //  0,0=GPIO05,GPIO06
+  GPIO_CLR(io->gpio, 22);   //stop right motor 
+  GPIO_CLR(io->gpio, 23);   //  0,0=GPIO22,GPIO23
+}
+
+void motor_forward(struct io_peripherals *io) {
+  GPIO_SET(io->gpio, 05);   //backward-spin left motor 
+  GPIO_CLR(io->gpio, 06);   //  0,1=GPIO05,GPIO06
+  GPIO_SET(io->gpio, 22);   //backward-spin right motor 
+  GPIO_CLR(io->gpio, 23);   //  1,0=GPIO22,GPIO23
+}
+
+void motor_backward(struct io_peripherals *io) {
+  GPIO_SET(io->gpio, 05);   //forward-spin left motor 
+  GPIO_CLR(io->gpio, 06);   //  1,0=GPIO05,GPIO06
+  GPIO_CLR(io->gpio, 22);   //forward-spin right motor 
+  GPIO_SET(io->gpio, 23);   //  0,1=GPIO22,GPIO23
+}
+
+void motor_left(struct io_peripherals *io) {
+  // left motor backward
+  GPIO_CLR(io->gpio, 05);
+  GPIO_SET(io->gpio, 06);
+
+  // right motor forward
+  GPIO_SET(io->gpio, 22);
+  GPIO_CLR(io->gpio, 23);
+}
+
+void motor_right(struct io_peripherals *io) {
+  // left motor forward
+  GPIO_SET(io->gpio, 05);
+  GPIO_CLR(io->gpio, 06);
+
+  // right motor backward
+  GPIO_CLR(io->gpio, 22);
+  GPIO_SET(io->gpio, 23);
+}
+
+void motor_pwm(struct io_peripherals *io, int left_pwm, int right_pwm) {
+  // Setting both the motors - turning both the motors on
+  GPIO_SET(io->gpio, 12);
+  GPIO_SET(io->gpio, 13);
+  
+  // running both motors for slower speed
+  int min_speed = (left_pwm < right_pwm) ? left_pwm : right_pwm;
+  usleep(min_speed * 100);
+  
+  // turning off slower motor
+  if (left_pwm < right_pwm)
+  {
+    GPIO_CLR(io->gpio, 13);
+  }
+  else
+  {
+    GPIO_CLR(io->gpio, 12);
+  }
+  
+  // running the faster motor
+  int remaining_speed = (left_pwm > right_pwm) ? (left_pwm - right_pwm) : (right_pwm - left_pwm);
+  usleep(remaining_speed * 100);
+  
+  // Clearing both the motors - turning both the motors off
+  GPIO_CLR(io->gpio, 12);
+  GPIO_CLR(io->gpio, 13);
+
+  // finish off the rest of the 10ms cycle
+  int max_speed = (left_pwm > right_pwm) ? left_pwm : right_pwm;
+  usleep((100 - max_speed) * 100);
+}
+
+// to get the last direction that the car followed 
+typedef enum {
+    DIR_FORWARD,
+    DIR_LEFT,
+    DIR_RIGHT,
+    DIR_NONE
+} dir;
+
+// the route for the car to take at the intersection
+dir route[6] = {
+    DIR_RIGHT,
+    DIR_LEFT,
+    DIR_RIGHT,
+    DIR_LEFT,
+    DIR_RIGHT,
+    DIR_NONE
+};
+
+typedef enum {
+    STOP,
+    FORWARD
+} motion_t;
+
+typedef struct {
+  int left_pwm;
+  int right_pwm;
+  bool running;
+  motion_t motion;
+  dir last_dir;
+  struct io_peripherals *io;
+  pthread_mutex_t lock;
+  
+  int intersection_count; // to keep track of the number of intersections
+  bool turning; // for when car is at the intersection and to stop turning at the correct time
+  dir turn_dir; // to determine which direction car is turning in and to continue turning in that direction in the intersection
+  bool approaching_turn; // to let the ir_thread know that the car should turn after it goes halfway across the intersection
+  int approach_counter; // to check how long to go forward before turning at the intersection
+  bool line_lost; // to make sure the car turns completely
+  int turn_counter; // make the car stop turning in case the center sensor does not detect the black line 
+  
+  // to check for intersection and branches using the side sensor
+  // to detect all white for turning
+  int all_white_count;
+  dir last_turn_dir; // to keep track of the previous turn
+  int end_of_row_count; // to make sure the car doesn't turn immediately after the side branch turn
+} shared_t;
+
+void *keyboard_thread(void *arg)
+{
+  shared_t *shared_data = (shared_t *)arg;
+  
+  int cmd;
+  
+  while(1)
+  {
+    pthread_mutex_lock(&shared_data->lock);
+    bool running = shared_data->running;
+    pthread_mutex_unlock(&shared_data->lock);
+  
+    if (!running) break;
+    
+    cmd = get_pressed_key();
+    
+    if (cmd == -1) {
+      usleep(10000); // 10 ms
+      continue;
+    }
+    
+    printf("\nHW6m2> ");
+    fflush(stdout);
+
+    if (cmd == 'w')
+    {
+      pthread_mutex_lock(&shared_data->lock);
+      shared_data->motion = FORWARD;
+      pthread_mutex_unlock(&shared_data->lock);
+    }
+    else if (cmd == 's')
+    {
+      pthread_mutex_lock(&shared_data->lock);
+      shared_data->motion = STOP;
+      pthread_mutex_unlock(&shared_data->lock);
+    }
+    else if (cmd == 'q')
+    {
+      pthread_mutex_lock(&shared_data->lock);
+      shared_data->running = false;
+      pthread_mutex_unlock(&shared_data->lock);
+    }
+  }
+  
+  return NULL;
+}
+
+void *ir_thread(void *arg)
+{
+  shared_t *shared_data = (shared_t *)arg;
+  struct io_peripherals *io = shared_data->io;
+  
+  while(1)
+  {
+    pthread_mutex_lock(&shared_data->lock);
+    bool running = shared_data->running;
+    pthread_mutex_unlock(&shared_data->lock);
+    
+    if (!running) break;
+    
+    // getting the data from the IR sensors - no need to mutex lock since these values are being obtained from hardware registers
+    int left_sensor_val = (io->gpio->GPLEV0 >> 24) & 1; // shift the bit and AND with 1
+    int right_sensor_val = (io->gpio->GPLEV0 >> 25) & 1; // shift the bit and AND with 1
+    int center_sensor_val = (io->gpio->GPLEV0 >> 26) & 1; // shift the bit and AND with 1
+
+    // getting the data from the side IR sensors 
+    int left_side_sensor_val = (io->gpio->GPLEV0 >> 27) & 1;
+    int right_side_sensor_val = (io->gpio->GPLEV0 >> 19) & 1;
+    
+    pthread_mutex_lock(&shared_data->lock);
+    
+    if (shared_data->intersection_count >= 6)
+    {
+      shared_data->motion = STOP;
+      pthread_mutex_unlock(&shared_data->lock);
+      break;
+    }
+    
+    // before turning -> the car needs to go forward halfway
+    if (shared_data->approaching_turn)
+    {
+      shared_data->left_pwm = 20;
+      shared_data->right_pwm = 20;
+      
+      shared_data->approach_counter++;
+      if (shared_data->approach_counter >= 2) // 40 loops x 1ms = 40 ms FORWARD
+      {
+        printf("Starting turn %d\n", shared_data->intersection_count);
+        shared_data->last_turn_dir = shared_data->turn_dir;
+        shared_data->approaching_turn = false;
+        shared_data->approach_counter = 0;
+        shared_data->turning = true;
+        shared_data->turn_counter = 0;
+        shared_data->intersection_count++;
+      }
+      
+      pthread_mutex_unlock(&shared_data->lock);
+      usleep(10000);
+      continue; // so that the normal line tracing is not followed until the turning is done  `
+    }
+    
+    // turning at the intersection
+    if (shared_data->turning)
+    {
+      shared_data->turn_counter++;
+      shared_data->all_white_count = 0;
+      
+      // stop turning after the car has turned about 90 degree (in case the center sensor has detected the black line)
+      if (shared_data->turn_counter >= 200)
+      {
+        shared_data->turning = false;
+        shared_data->line_lost = false;
+        shared_data->turn_counter = 0;
+        printf("Turning completed by turn_counter\n");
+      }
+      
+      if (shared_data->turn_dir == DIR_LEFT)
+      {
+        shared_data->left_pwm = 0;
+        shared_data->right_pwm = 100;
+        shared_data->last_dir = DIR_LEFT;
+      }
+      else if (shared_data->turn_dir == DIR_RIGHT) // DIR_RIGHT
+      {
+        shared_data->left_pwm = 100;
+        shared_data->right_pwm = 0;
+        shared_data->last_dir = DIR_RIGHT;
+      }
+      
+      // when the car turns a little, all the front sensors detect white -> the line is lost and turning will start
+      if ((left_sensor_val == 0) && (right_sensor_val == 0) && (center_sensor_val == 0))
+      {
+        shared_data->line_lost = true;
+      }
+      
+      // complete the turn until the line is found again
+      if ((shared_data->line_lost) && ((left_sensor_val == 0) && (right_sensor_val == 0) && (center_sensor_val == 1)))
+      {
+        shared_data->line_lost = false;
+        shared_data->turning = false;
+        shared_data->turn_counter = 0;
+        shared_data->all_white_count = 0;
+        printf("Turning complete by line_lost\n");
+      }
+      
+      pthread_mutex_unlock(&shared_data->lock);
+      usleep(10000);
+      continue; // so that the normal line tracing is not followed until the turning is done
+    }
+    
+    // SIDE SENSOR HANDING - second turn at the end of the row
+    if (((shared_data->last_turn_dir == DIR_RIGHT) && (left_side_sensor_val == 1)) || 
+       ((shared_data->last_turn_dir == DIR_LEFT) && (right_side_sensor_val == 1)))
+    {
+      if (!shared_data->turning)
+      {
+        printf("Side branch detected\n");
+        shared_data->turning = true;
+        shared_data->line_lost = false;
+        shared_data->turn_counter = 0;
+        shared_data->turn_dir = shared_data->last_turn_dir;
+        shared_data->last_turn_dir = DIR_NONE;
+        shared_data->all_white_count = 0;
+      }
+      pthread_mutex_unlock(&shared_data->lock);
+      usleep(10000); // 10 ms
+      continue;
+    }
+  
+    // NORMAL LINE TRACING
+    // left: white, right: white, center: black -> move FORWARD
+    if ((left_sensor_val == 0) && (right_sensor_val == 0) && (center_sensor_val == 1))
+    {
+      shared_data->left_pwm = 20;
+      shared_data->right_pwm = 20;
+      shared_data->last_dir = DIR_FORWARD;
+      shared_data->all_white_count = 0;
+    }
+    
+    // left: white, right: white, center: white -> move depending on the last direction OR intersection
+    else if ((left_sensor_val == 0) && (right_sensor_val == 0) && (center_sensor_val == 0))
+    {
+      shared_data->all_white_count++;
+      
+      if ((shared_data->end_of_row_count == 0) && (shared_data->all_white_count >= 6) && ((left_side_sensor_val == 1) || (right_side_sensor_val == 1)) && (shared_data->last_turn_dir == DIR_NONE))  // if all the front sensors are white for more than 50ms -> INTERSECTION
+      {
+        shared_data->approaching_turn = true;
+        shared_data->turn_dir = route[shared_data->intersection_count];
+        shared_data->line_lost = false;
+        shared_data->approach_counter = 0;
+        shared_data->all_white_count = 0;
+        shared_data->end_of_row_count = 50; // 500 ms
+      }
+      
+      else
+      {
+        if (shared_data->last_dir == DIR_FORWARD)
+        {
+          shared_data->left_pwm = 20;
+          shared_data->right_pwm = 20;
+        }
+        else if (shared_data->last_dir == DIR_RIGHT)
+        {
+          shared_data->left_pwm = 100;
+          shared_data->right_pwm = 0;
+        }
+        else if (shared_data->last_dir == DIR_LEFT)
+        {
+          shared_data->left_pwm = 0;
+          shared_data->right_pwm = 100;
+        }
+      }
+      
+    }
+    
+    // left: black, right: white, center: white -> move slightly RIGHT until the center sensor detects black(1) (lower speed of right motors)
+    else if ((left_sensor_val == 1) && (right_sensor_val == 0) && (center_sensor_val == 0))
+    {
+      shared_data->left_pwm = 60;
+      shared_data->right_pwm = 20;
+      //shared_data->last_dir = DIR_RIGHT;
+      shared_data->all_white_count = 0;
+    }
+    
+    // left: white, right: black, center: white -> move slightly LEFT until the center sensor detects black(1) (lower speed of left motors)
+    else if ((left_sensor_val == 0) && (right_sensor_val == 1) && (center_sensor_val == 0))
+    {
+      shared_data->left_pwm = 20;
+      shared_data->right_pwm = 60;
+      //shared_data->last_dir = DIR_LEFT;
+      shared_data->all_white_count = 0;
+    }   
+    
+    else
+    {
+      shared_data->all_white_count = 0;
+    }
+    
+    if (shared_data->end_of_row_count > 0)
+    {
+      shared_data->end_of_row_count--;
+    }
+    
+    pthread_mutex_unlock(&shared_data->lock);
+    
+    usleep(10000); // update every 10ms
+  }
+  
+  return NULL;
+  
+}
+
+void *motor_thread(void *arg)
+{
+  shared_t *shared_data = (shared_t *)arg;
+  struct io_peripherals *io = shared_data->io;
+  
+  while(1)
+  {
+    // getting all the data
+    pthread_mutex_lock(&shared_data->lock);
+    bool running = shared_data->running;
+    int left_pwm = shared_data->left_pwm;
+    int right_pwm = shared_data->right_pwm;
+    motion_t motion = shared_data->motion;
+    
+    bool turning = shared_data->turning;
+    dir turn_dir = shared_data->turn_dir;
+    pthread_mutex_unlock(&shared_data->lock);
+    
+    if (!running) break;
+    
+    // car is tracing the line -> move FORWARD 
+    if (motion == FORWARD)
+    {
+      if (turning)
+      {
+        if (turn_dir == DIR_LEFT)
+        {
+          motor_left(io);
+        }
+        else 
+        {
+          motor_right(io);
+        }
+        
+        motor_pwm(io, 100, 100); // turn at full speed
+      }
+      else
+      {
+        motor_forward(io);
+        motor_pwm(io, left_pwm, right_pwm);
+      }
+    }
+    else if (motion == STOP)
+    {
+      motor_stop(io);
+      GPIO_CLR(shared_data->io->gpio, 12);
+      GPIO_CLR(shared_data->io->gpio, 13);
+    }
+    
+    //usleep(10000); // 10ms
+  }
+  
+  return NULL;
+}
+
+int main(void)
+{
+  printf("HW6m2> ");
+  fflush(stdout);
+  
+  struct io_peripherals *io;
+
+  io = import_registers();
+  if (io != NULL)
+  {
+    /* set the pin function to OUTPUT for GPIO 05,06,22,23,12,13 */
+    io->gpio->GPFSEL0.field.FSEL5 = GPFSEL_OUTPUT;   //set GPIO 05 as output
+    io->gpio->GPFSEL0.field.FSEL6 = GPFSEL_OUTPUT;   //set GPIO 06 as output
+    io->gpio->GPFSEL2.field.FSEL2 = GPFSEL_OUTPUT;   //set GPIO 22 as output
+    io->gpio->GPFSEL2.field.FSEL3 = GPFSEL_OUTPUT;   //set GPIO 23 as output
+    io->gpio->GPFSEL1.field.FSEL2 = GPFSEL_OUTPUT;   //set GPIO 12 as output
+    io->gpio->GPFSEL1.field.FSEL3 = GPFSEL_OUTPUT;   //set GPIO 13 as output
+  
+    // to read data from the IR sensors - set their GPIO pins as inputs
+    io->gpio->GPFSEL2.field.FSEL4 = GPFSEL_INPUT; // GPIO24
+    io->gpio->GPFSEL2.field.FSEL5 = GPFSEL_INPUT; // GPIO25
+    io->gpio->GPFSEL2.field.FSEL6 = GPFSEL_INPUT; // GPIO26
+    io->gpio->GPFSEL2.field.FSEL7 = GPFSEL_INPUT; // GPIO17
+    io->gpio->GPFSEL1.field.FSEL9 = GPFSEL_INPUT; // GPIO18
+    
+    shared_t shared;
+    
+    pthread_mutex_init(&shared.lock, NULL);
+    shared.left_pwm = 20;
+    shared.right_pwm = 20;
+    shared.running = true;
+    shared.motion = STOP;
+    shared.last_dir = DIR_FORWARD;
+    shared.io = io;
+    shared.intersection_count = 0;
+    shared.turning = false;
+    shared.turn_dir = DIR_NONE;
+    shared.approaching_turn = false;
+    shared.approach_counter = 0;
+    shared.line_lost = false;
+    shared.turn_counter = 0;
+    shared.all_white_count = 0;
+    shared.last_turn_dir = DIR_NONE;
+    shared.end_of_row_count = 0;
+    
+    pthread_t keyboard_t;
+    pthread_t ir_t;
+    pthread_t motor_t;
+    
+    pthread_create(&keyboard_t, NULL, keyboard_thread, &shared); // start keyboard thread running
+    pthread_create(&ir_t, NULL, ir_thread, &shared); // start ir thread running
+    pthread_create(&motor_t, NULL, motor_thread, &shared); // start motor thread running
+    
+    pthread_join(keyboard_t, NULL); // waiting for keyboard thread to terminate
+    pthread_join(ir_t, NULL); // waiting for ir thread to terminate
+    pthread_join(motor_t, NULL); // waiting for motor thread to terminate
+    
+    // cleaning up
+    io->gpio->GPFSEL0.field.FSEL5 = GPFSEL_INPUT;
+    io->gpio->GPFSEL0.field.FSEL6 = GPFSEL_INPUT;
+    io->gpio->GPFSEL2.field.FSEL2 = GPFSEL_INPUT;
+    io->gpio->GPFSEL2.field.FSEL3 = GPFSEL_INPUT;
+    io->gpio->GPFSEL1.field.FSEL2 = GPFSEL_INPUT;
+    io->gpio->GPFSEL1.field.FSEL3 = GPFSEL_INPUT;
+    
+    printf("\n motor testing function and main done\n\n");
+  }
+  
+  else
+  {
+    ; /* warning message already issued */
+  }
+
+  printf("\n motor testing function and main done\n\n");   //program ending note
+
+  return 0;
+}
