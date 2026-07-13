@@ -1,0 +1,1422 @@
+  1. [19:02:14] SINGLE -> BLUE
+  2. [19:02:30] EMPTY  -> RED
+  3. [19:02:43] SINGLE -> BLUE
+  4. [19:02:46] DOUBLE -> GREEN
+  5. [19:02:47] SINGLE -> BLUE
+  1. [19:03:34] SINGLE -> BLUE
+  2. [19:03:50] DOUBLE -> GREEN
+  3. [19:03:50] SINGLE -> BLUE
+  4. [19:03:56] EMPTY  -> RED
+  5. [19:04:00] SINGLE -> BLUE
+  6. [19:04:01] DOUBLE -> GREEN
+  1. [19:05:52] DOUBLE -> GREEN
+  2. [19:05:56] SINGLE -> BLUE
+  3. [19:06:02] DOUBLE -> GREEN
+  4. [19:06:06] SINGLE -> BLUE
+  5. [19:06:06] EMPTY  -> RED
+  6. [19:06:09] SINGLE -> BLUE
+  7. [19:06:12] DOUBLE -> GREEN
+  1. [19:31:28] DOUBLE -> GREEN
+  2. [19:31:36] SINGLE -> BLUE
+  3. [19:31:39] EMPTY  -> RED
+  4. [19:31:42] SINGLE -> BLUE
+  5. [19:31:43] DOUBLE -> GREEN
+  1. [19:33:42] DOUBLE -> GREEN
+  2. [19:33:48] SINGLE -> BLUE
+  3. [19:33:49] EMPTY  -> RED
+  4. [19:33:54] SINGLE -> BLUE
+  5. [19:33:58] DOUBLE -> GREEN
+  6. [19:34:02] EMPTY  -> RED
+  7. [19:34:05] SINGLE -> BLUE
+  8. [19:34:07] DOUBLE -> GREEN
+  9. [19:34:11] SINGLE -> BLUE
+ 10. [19:34:12] EMPTY  -> RED
+  1. [19:36:32] DOUBLE -> GREEN
+  1. [19:53:04] DOUBLE -> GREEN
+  2. [19:53:09] SINGLE -> BLUE
+  3. [19:53:10] EMPTY  -> RED
+  4. [19:53:12] SINGLE -> BLUE
+  5. [19:53:14] DOUBLE -> GREEN
+  1. [20:03:56] DOUBLE -> GREEN
+  1. [20:06:29] DOUBLE -> GREEN
+  1. [20:11:41] DOUBLE -> GREEN
+  1. [20:35:45] DOUBLE -> GREEN
+  2. [20:35:51] SINGLE -> BLUE
+  3. [20:35:54] EMPTY  -> RED
+  1. [22:48:07] EMPTY  -> RED
+  2. [22:48:26] SINGLE -> BLUE
+  3. [22:48:27] EMPTY  -> RED
+  4. [22:48:30] SINGLE -> BLUE
+  5. [22:48:34] EMPTY  -> RED
+  6. [22:48:37] SINGLE -> BLUE
+  7. [22:48:37] EMPTY  -> RED
+  1. [22:54:08] EMPTY  -> RED
+  2. [22:54:33] SINGLE -> BLUE
+  3. [22:54:34] EMPTY  -> RED
+  4. [22:54:37] SINGLE -> BLUE
+  5. [22:54:37] EMPTY  -> RED
+  6. [22:54:41] SINGLE -> BLUE
+  7. [22:55:15] EMPTY  -> RED
+  8. [22:55:33] SINGLE -> BLUE
+  9. [22:55:34] EMPTY  -> RED
+  1. [22:59:11] EMPTY  -> RED
+  2. [22:59:20] SINGLE -> GREEN
+  3. [22:59:21] EMPTY  -> RED
+  4. [22:59:24] SINGLE -> GREEN
+  5. [22:59:45] EMPTY  -> RED
+  6. [22:59:51] SINGLE -> GREEN
+  7. [22:59:51] EMPTY  -> RED
+  8. [23:00:56] SINGLE -> GREEN
+  9. [23:00:57] EMPTY  -> RED
+ 10. [23:00:58] SINGLE -> GREEN
+ 11. [23:01:00] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 5, D: 0, E: 6
+  1. [23:03:47] EMPTY  -> RED
+  2. [23:03:57] SINGLE -> GREEN
+  3. [23:03:57] EMPTY  -> RED
+  4. [23:04:10] SINGLE -> GREEN
+  5. [23:04:20] DOUBLE -> BLUE
+  6. [23:04:21] SINGLE -> GREEN
+  7. [23:04:21] DOUBLE -> BLUE
+  8. [23:04:22] SINGLE -> GREEN
+  9. [23:04:22] DOUBLE -> BLUE
+ 10. [23:04:27] SINGLE -> GREEN
+ 11. [23:05:07] DOUBLE -> BLUE
+ 12. [23:05:08] SINGLE -> GREEN
+ 13. [23:05:15] DOUBLE -> BLUE
+ 14. [23:05:15] SINGLE -> GREEN
+ 15. [23:05:32] DOUBLE -> BLUE
+ 16. [23:05:32] SINGLE -> GREEN
+ 17. [23:05:40] DOUBLE -> BLUE
+ 18. [23:05:40] SINGLE -> GREEN
+ 19. [23:05:41] DOUBLE -> BLUE
+ 20. [23:05:41] SINGLE -> GREEN
+ 21. [23:05:56] DOUBLE -> BLUE
+ 22. [23:05:57] SINGLE -> GREEN
+ 23. [23:05:57] DOUBLE -> BLUE
+ 24. [23:05:58] SINGLE -> GREEN
+ 25. [23:06:37] DOUBLE -> BLUE
+ 26. [23:06:38] SINGLE -> GREEN
+ 27. [23:06:38] DOUBLE -> BLUE
+ 28. [23:06:39] SINGLE -> GREEN
+ 29. [23:07:01] DOUBLE -> BLUE
+ 30. [23:07:12] EMPTY  -> RED
+ 31. [23:07:29] SINGLE -> GREEN
+ 32. [23:07:31] DOUBLE -> BLUE
+ 33. [23:09:34] EMPTY  -> RED
+ 34. [23:09:36] SINGLE -> GREEN
+ 35. [23:09:36] DOUBLE -> BLUE
+ 36. [23:09:41] SINGLE -> GREEN
+ 37. [23:09:44] DOUBLE -> BLUE
+ 38. [23:10:43] SINGLE -> GREEN
+ 39. [23:10:55] DOUBLE -> BLUE
+==== STAND COUNT REPORT ====
+S: 18, D: 17, E: 4
+  1. [23:12:51] DOUBLE -> BLUE
+==== STAND COUNT REPORT ====
+S: 0, D: 1, E: 0
+  1. [23:15:15] DOUBLE -> BLUE
+  2. [23:16:00] SINGLE -> GREEN
+  3. [23:16:00] EMPTY  -> RED
+  4. [23:16:01] SINGLE -> GREEN
+  5. [23:16:02] DOUBLE -> BLUE
+  6. [23:16:02] SINGLE -> GREEN
+  7. [23:16:02] DOUBLE -> BLUE
+==== STAND COUNT REPORT ====
+S: 3, D: 3, E: 1
+  1. [23:16:46] DOUBLE -> BLUE
+  2. [23:16:54] SINGLE -> GREEN
+  3. [23:17:20] EMPTY  -> RED
+  4. [23:17:27] SINGLE -> GREEN
+  5. [23:17:29] DOUBLE -> BLUE
+  6. [23:17:35] SINGLE -> GREEN
+  7. [23:17:39] DOUBLE -> BLUE
+  8. [23:17:40] SINGLE -> GREEN
+  9. [23:17:44] DOUBLE -> BLUE
+ 10. [23:17:45] SINGLE -> GREEN
+ 11. [23:17:47] DOUBLE -> BLUE
+==== STAND COUNT REPORT ====
+S: 5, D: 5, E: 1
+  1. [23:21:39] DOUBLE -> BLUE
+  2. [23:21:53] SINGLE -> GREEN
+  3. [23:21:53] EMPTY  -> RED
+  4. [23:22:03] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 2, D: 1, E: 1
+  1. [23:40:03] SINGLE -> GREEN
+  2. [23:40:32] DOUBLE -> BLUE
+  3. [23:40:40] SINGLE -> GREEN
+  4. [23:40:40] EMPTY  -> RED
+  5. [23:40:46] SINGLE -> GREEN
+  6. [23:40:49] DOUBLE -> BLUE
+  7. [23:40:52] SINGLE -> GREEN
+  8. [23:40:55] DOUBLE -> BLUE
+  9. [23:40:56] SINGLE -> GREEN
+ 10. [23:40:57] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 5, D: 3, E: 2
+  1. [00:02:47] EMPTY  -> RED
+  2. [00:02:56] SINGLE -> GREEN
+  3. [00:03:01] DOUBLE -> BLUE
+  4. [00:03:02] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 1, D: 1, E: 2
+  1. [12:38:56] SINGLE -> GREEN
+  1. [12:41:56] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 1, D: 0, E: 0
+  1. [12:48:13] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 0, D: 0, E: 1
+  1. [12:51:30] SINGLE -> GREEN
+  2. [12:51:32] EMPTY  -> RED
+  3. [12:51:36] SINGLE -> GREEN
+  4. [12:51:36] EMPTY  -> RED
+  5. [12:51:37] SINGLE -> GREEN
+  6. [12:51:45] EMPTY  -> RED
+  7. [12:51:46] SINGLE -> GREEN
+  8. [12:51:50] DOUBLE -> BLUE
+  9. [12:51:50] SINGLE -> GREEN
+ 10. [12:51:54] DOUBLE -> BLUE
+ 11. [12:51:55] SINGLE -> GREEN
+ 12. [12:51:56] DOUBLE -> BLUE
+ 13. [12:51:57] SINGLE -> GREEN
+ 14. [12:51:57] DOUBLE -> BLUE
+ 15. [12:51:57] SINGLE -> GREEN
+ 16. [12:51:58] EMPTY  -> RED
+ 17. [12:52:12] SINGLE -> GREEN
+ 18. [12:52:13] EMPTY  -> RED
+ 19. [12:52:33] SINGLE -> GREEN
+ 20. [12:52:34] EMPTY  -> RED
+ 21. [12:52:34] SINGLE -> GREEN
+ 22. [12:52:35] EMPTY  -> RED
+ 23. [12:52:36] SINGLE -> GREEN
+ 24. [12:52:37] EMPTY  -> RED
+ 25. [12:52:44] SINGLE -> GREEN
+ 26. [12:52:45] EMPTY  -> RED
+ 27. [12:52:48] SINGLE -> GREEN
+ 28. [12:52:51] EMPTY  -> RED
+ 29. [12:52:55] SINGLE -> GREEN
+ 30. [12:53:12] EMPTY  -> RED
+ 31. [12:53:25] SINGLE -> GREEN
+ 32. [12:53:44] EMPTY  -> RED
+ 33. [12:53:44] SINGLE -> GREEN
+ 34. [12:54:00] EMPTY  -> RED
+ 35. [12:54:02] SINGLE -> GREEN
+ 36. [12:54:09] EMPTY  -> RED
+ 37. [12:54:09] SINGLE -> GREEN
+ 38. [12:54:10] EMPTY  -> RED
+ 39. [12:54:13] SINGLE -> GREEN
+ 40. [12:54:20] EMPTY  -> RED
+ 41. [12:54:21] SINGLE -> GREEN
+ 42. [12:54:44] DOUBLE -> BLUE
+ 43. [12:54:45] SINGLE -> GREEN
+ 44. [12:54:51] DOUBLE -> BLUE
+ 45. [12:54:51] SINGLE -> GREEN
+ 46. [12:54:51] DOUBLE -> BLUE
+ 47. [12:54:52] SINGLE -> GREEN
+ 48. [12:54:53] DOUBLE -> BLUE
+ 49. [12:54:53] SINGLE -> GREEN
+ 50. [12:55:01] EMPTY  -> RED
+ 51. [12:55:04] SINGLE -> GREEN
+ 52. [12:55:05] EMPTY  -> RED
+ 53. [12:55:05] SINGLE -> GREEN
+ 54. [12:55:05] EMPTY  -> RED
+ 55. [12:55:06] SINGLE -> GREEN
+ 56. [12:55:06] EMPTY  -> RED
+ 57. [12:55:13] SINGLE -> GREEN
+ 58. [12:55:13] EMPTY  -> RED
+ 59. [12:55:21] SINGLE -> GREEN
+ 60. [12:55:25] EMPTY  -> RED
+ 61. [12:55:26] SINGLE -> GREEN
+ 62. [12:55:27] EMPTY  -> RED
+ 63. [12:55:28] SINGLE -> GREEN
+ 64. [12:55:32] DOUBLE -> BLUE
+ 65. [12:55:33] SINGLE -> GREEN
+ 66. [12:55:38] DOUBLE -> BLUE
+==== STAND COUNT REPORT ====
+S: 33, D: 10, E: 23
+  1. [12:56:18] DOUBLE -> BLUE
+  2. [12:56:22] SINGLE -> GREEN
+  3. [12:56:25] EMPTY  -> RED
+  4. [12:56:29] SINGLE -> GREEN
+  5. [12:56:31] EMPTY  -> RED
+  6. [12:56:32] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 3, D: 1, E: 2
+  1. [12:57:08] EMPTY  -> RED
+  2. [12:57:10] SINGLE -> GREEN
+  3. [12:57:12] EMPTY  -> RED
+  4. [12:57:12] SINGLE -> GREEN
+  5. [12:57:14] DOUBLE -> BLUE
+  6. [12:57:16] EMPTY  -> RED
+  7. [12:57:17] SINGLE -> GREEN
+  8. [12:57:19] DOUBLE -> BLUE
+  9. [12:57:20] EMPTY  -> RED
+ 10. [12:57:22] SINGLE -> GREEN
+ 11. [12:57:23] EMPTY  -> RED
+ 12. [12:57:24] SINGLE -> GREEN
+ 13. [12:57:26] DOUBLE -> BLUE
+ 14. [12:57:27] SINGLE -> GREEN
+ 15. [12:57:27] EMPTY  -> RED
+ 16. [12:57:28] DOUBLE -> BLUE
+ 17. [12:57:29] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 7, D: 4, E: 6
+  1. [12:59:16] DOUBLE -> BLUE
+==== STAND COUNT REPORT ====
+S: 0, D: 1, E: 0
+  1. [13:00:03] DOUBLE -> BLUE
+  2. [13:00:06] SINGLE -> GREEN
+  3. [13:00:06] DOUBLE -> BLUE
+==== STAND COUNT REPORT ====
+S: 1, D: 2, E: 0
+==== STAND COUNT REPORT ====
+S: 0, D: 0, E: 0
+  1. [13:00:41] SINGLE -> GREEN
+  2. [13:00:43] DOUBLE -> BLUE
+  3. [13:00:45] SINGLE -> GREEN
+  4. [13:00:47] EMPTY  -> RED
+  5. [13:00:48] DOUBLE -> BLUE
+  6. [13:00:51] EMPTY  -> RED
+  7. [13:00:52] SINGLE -> GREEN
+  8. [13:00:52] DOUBLE -> BLUE
+  9. [13:00:54] SINGLE -> GREEN
+ 10. [13:00:55] DOUBLE -> BLUE
+ 11. [13:00:56] SINGLE -> GREEN
+ 12. [13:00:57] DOUBLE -> BLUE
+ 13. [13:00:58] SINGLE -> GREEN
+ 14. [13:00:59] DOUBLE -> BLUE
+ 15. [13:01:00] EMPTY  -> RED
+ 16. [13:01:01] DOUBLE -> BLUE
+==== STAND COUNT REPORT ====
+S: 6, D: 7, E: 3
+  1. [13:15:19] DOUBLE -> BLUE
+  2. [13:15:23] SINGLE -> GREEN
+  3. [13:15:33] DOUBLE -> BLUE
+  4. [13:15:38] SINGLE -> GREEN
+  5. [13:15:39] DOUBLE -> BLUE
+  6. [13:15:42] SINGLE -> GREEN
+  7. [13:15:47] DOUBLE -> BLUE
+  8. [13:15:47] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 4, D: 4, E: 0
+  1. [13:17:46] EMPTY  -> RED
+  2. [13:17:52] SINGLE -> GREEN
+  3. [13:17:54] DOUBLE -> BLUE
+  4. [13:17:58] EMPTY  -> RED
+  5. [13:18:03] SINGLE -> GREEN
+  6. [13:18:06] DOUBLE -> BLUE
+  7. [13:18:08] SINGLE -> GREEN
+  8. [13:18:11] EMPTY  -> RED
+  9. [13:18:18] SINGLE -> GREEN
+ 10. [13:18:18] EMPTY  -> RED
+ 11. [13:18:24] SINGLE -> GREEN
+ 12. [13:18:25] EMPTY  -> RED
+ 13. [13:18:26] SINGLE -> GREEN
+ 14. [13:18:27] EMPTY  -> RED
+ 15. [13:18:28] SINGLE -> GREEN
+ 16. [13:18:28] EMPTY  -> RED
+ 17. [13:18:35] SINGLE -> GREEN
+ 18. [13:18:36] EMPTY  -> RED
+ 19. [13:19:36] SINGLE -> GREEN
+ 20. [13:19:37] EMPTY  -> RED
+ 21. [13:19:39] SINGLE -> GREEN
+ 22. [13:19:44] EMPTY  -> RED
+ 23. [13:19:48] SINGLE -> GREEN
+ 24. [13:19:51] EMPTY  -> RED
+ 25. [13:19:54] SINGLE -> GREEN
+ 26. [13:19:55] EMPTY  -> RED
+ 27. [13:20:05] SINGLE -> GREEN
+ 28. [13:20:06] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 13, D: 2, E: 13
+  1. [13:24:13] EMPTY  -> RED
+  2. [13:24:24] SINGLE -> GREEN
+  3. [13:24:27] DOUBLE -> BLUE
+  4. [13:24:35] SINGLE -> GREEN
+  5. [13:24:37] EMPTY  -> RED
+  6. [13:24:38] SINGLE -> GREEN
+  7. [13:24:42] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 3, D: 1, E: 3
+  1. [13:30:19] EMPTY  -> RED
+  2. [13:30:21] SINGLE -> GREEN
+  3. [13:30:23] EMPTY  -> RED
+  4. [13:30:29] SINGLE -> GREEN
+  5. [13:30:29] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 2, D: 0, E: 3
+  1. [13:31:10] EMPTY  -> RED
+  2. [13:31:12] SINGLE -> GREEN
+  3. [13:31:15] DOUBLE -> BLUE
+  4. [13:31:17] EMPTY  -> RED
+  5. [13:31:20] SINGLE -> GREEN
+  6. [13:31:22] DOUBLE -> BLUE
+  7. [13:31:24] SINGLE -> GREEN
+  8. [13:31:25] EMPTY  -> RED
+  9. [13:31:26] SINGLE -> GREEN
+ 10. [13:31:27] DOUBLE -> BLUE
+==== STAND COUNT REPORT ====
+S: 4, D: 3, E: 3
+  1. [13:33:44] EMPTY  -> RED
+  2. [13:33:46] SINGLE -> GREEN
+  3. [13:33:47] EMPTY  -> RED
+  4. [13:33:48] SINGLE -> GREEN
+  5. [13:33:49] DOUBLE -> BLUE
+  6. [13:33:50] SINGLE -> GREEN
+  7. [13:33:50] DOUBLE -> BLUE
+  8. [13:33:50] SINGLE -> GREEN
+  9. [13:33:52] DOUBLE -> BLUE
+ 10. [13:33:54] EMPTY  -> RED
+ 11. [13:33:55] SINGLE -> GREEN
+ 12. [13:33:55] EMPTY  -> RED
+ 13. [13:33:55] SINGLE -> GREEN
+ 14. [13:33:56] EMPTY  -> RED
+ 15. [13:33:58] SINGLE -> GREEN
+ 16. [13:33:59] EMPTY  -> RED
+ 17. [13:34:02] SINGLE -> GREEN
+ 18. [13:34:02] EMPTY  -> RED
+ 19. [13:34:06] SINGLE -> GREEN
+ 20. [13:34:09] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 9, D: 3, E: 8
+  1. [13:34:44] EMPTY  -> RED
+  2. [13:34:46] SINGLE -> GREEN
+  3. [13:34:46] EMPTY  -> RED
+  4. [13:34:48] SINGLE -> GREEN
+  5. [13:34:49] EMPTY  -> RED
+  6. [13:34:50] SINGLE -> GREEN
+  7. [13:34:52] EMPTY  -> RED
+  8. [13:34:54] SINGLE -> GREEN
+  9. [13:34:55] EMPTY  -> RED
+ 10. [13:34:56] SINGLE -> GREEN
+ 11. [13:34:57] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 5, D: 0, E: 6
+  1. [13:54:03] SINGLE -> GREEN
+  2. [13:54:04] EMPTY  -> RED
+  3. [13:54:10] SINGLE -> GREEN
+  4. [13:54:14] EMPTY  -> RED
+  5. [13:54:16] SINGLE -> GREEN
+  6. [13:54:24] EMPTY  -> RED
+  7. [13:54:26] SINGLE -> GREEN
+  8. [13:54:27] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 4, D: 0, E: 4
+  1. [13:57:53] EMPTY  -> RED
+  2. [13:58:02] SINGLE -> GREEN
+  3. [13:58:04] EMPTY  -> RED
+  4. [13:58:11] SINGLE -> GREEN
+  5. [13:58:11] EMPTY  -> RED
+  6. [13:58:12] SINGLE -> GREEN
+  7. [13:58:13] EMPTY  -> RED
+  8. [13:58:14] SINGLE -> GREEN
+  9. [13:58:15] EMPTY  -> RED
+ 10. [13:58:16] SINGLE -> GREEN
+ 11. [13:58:17] EMPTY  -> RED
+ 12. [13:58:18] SINGLE -> GREEN
+ 13. [13:58:20] EMPTY  -> RED
+ 14. [13:58:21] SINGLE -> GREEN
+ 15. [13:58:25] EMPTY  -> RED
+ 16. [13:58:29] SINGLE -> GREEN
+ 17. [13:58:30] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 8, D: 0, E: 9
+  1. [14:00:38] EMPTY  -> RED
+  2. [14:00:42] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:00:45] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:00:46] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:00:55] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:00:58] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:01:02] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:01:05] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:01:07] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:01:09] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:01:10] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:01:20] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:01:23] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+==== STAND COUNT REPORT ====
+S: 0, D: 0, E: 1
+  1. [14:05:44] EMPTY  -> RED
+  2. [14:05:52] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:06:11] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:06:20] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:06:27] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+==== STAND COUNT REPORT ====
+S: 0, D: 0, E: 1
+  1. [14:08:04] EMPTY  -> RED
+  2. [14:08:12] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 1, D: 0, E: 1
+  1. [14:12:07] EMPTY  -> RED
+  2. [14:12:17] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:12:18] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:12:20] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:12:22] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:12:27] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:12:28] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:12:31] SINGLE -> GREEN
+  3. [14:12:33] DOUBLE -> BLUE
+  4. [14:12:35] EMPTY  -> RED
+  5. [14:12:35] SINGLE -> GREEN
+  6. [14:12:36] DOUBLE -> BLUE
+  7. [14:12:37] SINGLE -> GREEN
+  8. [14:12:38] EMPTY  -> RED
+  9. [14:12:39] SINGLE -> GREEN
+ 10. [14:12:40] DOUBLE -> BLUE
+ 11. [14:12:41] EMPTY  -> RED
+ 12. [14:12:42] DOUBLE -> BLUE
+==== STAND COUNT REPORT ====
+S: 4, D: 4, E: 4
+  1. [14:13:29] SINGLE -> GREEN
+  2. [14:13:32] EMPTY  -> RED
+  3. [14:13:34] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [14:13:37] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [14:13:39] SINGLE -> GREEN
+  4. [14:13:42] DOUBLE -> BLUE
+  5. [14:13:43] EMPTY  -> RED
+  6. [14:13:44] SINGLE -> GREEN
+  7. [14:13:45] DOUBLE -> BLUE
+  8. [14:13:47] EMPTY  -> RED
+  9. [14:13:48] SINGLE -> GREEN
+ 10. [14:13:49] DOUBLE -> BLUE
+ 11. [14:13:50] SINGLE -> GREEN
+ 12. [14:13:51] DOUBLE -> BLUE
+ 13. [14:13:52] SINGLE -> GREEN
+ 14. [14:13:55] DOUBLE -> BLUE
+ 15. [14:13:57] SINGLE -> GREEN
+ 16. [14:13:57] DOUBLE -> BLUE
+ 17. [14:13:58] EMPTY  -> RED
+ 18. [14:14:03] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:14:11] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:14:16] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:14:36] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:14:40] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:14:42] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:14:45] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:14:56] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:14:58] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:15:02] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:15:08] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:15:11] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:15:12] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:15:18] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:15:39] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:09] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:25] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:28] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:29] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:36] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:38] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:40] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:42] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:45] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:47] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:52] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:16:58] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:17:05] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:17:19] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:19:56] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 18. [14:20:17] SINGLE -> GREEN
+ 19. [14:20:30] DOUBLE -> BLUE
+ 20. [14:20:35] SINGLE -> GREEN
+ 21. [14:20:39] EMPTY  -> RED
+ 22. [14:20:39] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:20:45] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:20:52] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:20:58] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:21:01] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:21:03] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:21:06] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:21:13] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:21:35] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:21:38] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:21:48] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:21:54] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:21:56] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:21:57] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:22:02] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:22:10] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:22:16] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:22:19] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:22:23] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:22:28] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:22:33] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:23:26] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:23:28] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:23:31] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:23:38] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [14:23:41] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 10, D: 7, E: 5
+  1. [14:32:16] SINGLE -> GREEN
+  2. [14:32:27] EMPTY  -> RED
+  3. [14:33:01] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [14:33:08] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [14:34:57] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [14:35:04] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [14:35:05] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [14:35:16] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [14:35:33] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 2, D: 0, E: 1
+  1. [14:36:21] EMPTY  -> RED
+  2. [14:36:24] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+==== STAND COUNT REPORT ====
+S: 0, D: 0, E: 1
+  1. [14:37:15] EMPTY  -> RED
+  2. [14:37:17] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:37:24] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [14:37:26] SINGLE -> GREEN
+  3. [14:37:39] DOUBLE -> BLUE
+  4. [14:37:39] SINGLE -> GREEN
+  5. [14:37:40] DOUBLE -> BLUE
+  6. [14:37:42] SINGLE -> GREEN
+  7. [14:38:06] DOUBLE -> BLUE
+  8. [14:38:27] SINGLE -> GREEN
+  9. [14:38:30] EMPTY  -> RED
+ 10. [14:38:31] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [14:38:33] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [14:38:34] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [14:38:38] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [14:38:40] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [14:38:41] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [14:38:43] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [14:38:44] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [14:38:46] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [14:38:46] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [14:38:53] SINGLE -> GREEN
+ 11. [14:39:05] DOUBLE -> BLUE
+ 12. [14:39:07] SINGLE -> GREEN
+ 13. [14:39:11] EMPTY  -> RED
+ 14. [14:39:12] SINGLE -> GREEN
+ 15. [14:39:16] DOUBLE -> BLUE
+ 16. [14:39:23] SINGLE -> GREEN
+ 17. [14:39:25] EMPTY  -> RED
+ 18. [14:39:26] SINGLE -> GREEN
+ 19. [14:39:27] DOUBLE -> BLUE
+ 20. [14:39:27] SINGLE -> GREEN
+ 21. [14:39:29] DOUBLE -> BLUE
+ 22. [14:39:30] SINGLE -> GREEN
+ 23. [14:39:30] DOUBLE -> BLUE
+ 24. [14:39:38] SINGLE -> GREEN
+ 25. [14:39:40] EMPTY  -> RED
+ 26. [14:39:40] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 26. [14:39:54] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 26. [14:39:57] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 26. [14:40:00] SINGLE -> GREEN
+ 27. [14:40:01] DOUBLE -> BLUE
+ 28. [14:40:01] SINGLE -> GREEN
+ 29. [14:40:25] DOUBLE -> BLUE
+ 30. [14:40:27] SINGLE -> GREEN
+ 31. [14:40:27] DOUBLE -> BLUE
+ 32. [14:40:28] SINGLE -> GREEN
+ 33. [14:40:30] EMPTY  -> RED
+ 34. [14:40:32] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 34. [14:40:35] SINGLE -> GREEN
+ 35. [14:40:37] DOUBLE -> BLUE
+ 36. [14:40:49] SINGLE -> GREEN
+ 37. [14:40:49] EMPTY  -> RED
+ 38. [14:40:51] SINGLE -> GREEN
+ 39. [14:40:51] DOUBLE -> BLUE
+ 40. [14:40:52] SINGLE -> GREEN
+ 41. [14:40:54] EMPTY  -> RED
+ 42. [14:40:54] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 42. [14:40:58] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 42. [14:41:08] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 42. [14:41:12] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 42. [14:41:13] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 42. [14:41:16] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 42. [14:41:19] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 42. [14:41:31] SINGLE -> GREEN
+ 43. [14:41:31] DOUBLE -> BLUE
+ 44. [14:41:31] SINGLE -> GREEN
+ 45. [14:41:47] EMPTY  -> RED
+ 46. [14:41:49] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 46. [14:41:56] SINGLE -> GREEN
+ 47. [14:41:59] DOUBLE -> BLUE
+ 48. [14:42:00] SINGLE -> GREEN
+ 49. [14:42:02] EMPTY  -> RED
+ 50. [14:42:03] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 50. [14:42:05] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 50. [14:42:06] SINGLE -> GREEN
+ 51. [14:42:12] DOUBLE -> BLUE
+ 52. [14:42:12] SINGLE -> GREEN
+ 53. [14:42:14] EMPTY  -> RED
+ 54. [14:42:16] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 54. [14:42:17] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 27, D: 16, E: 11
+  1. [14:48:49] SINGLE -> GREEN
+  2. [14:48:54] EMPTY  -> RED
+  3. [14:48:55] SINGLE -> GREEN
+  4. [14:48:55] DOUBLE -> BLUE
+  5. [14:48:56] SINGLE -> GREEN
+  6. [14:48:57] DOUBLE -> BLUE
+  7. [14:49:02] SINGLE -> GREEN
+  8. [14:49:05] DOUBLE -> BLUE
+  9. [14:49:05] SINGLE -> GREEN
+ 10. [14:49:10] DOUBLE -> BLUE
+ 11. [14:49:11] SINGLE -> GREEN
+ 12. [14:49:14] DOUBLE -> BLUE
+ 13. [14:49:15] SINGLE -> GREEN
+ 14. [14:49:15] DOUBLE -> BLUE
+ 15. [14:49:16] SINGLE -> GREEN
+ 16. [14:49:21] EMPTY  -> RED
+ 17. [14:49:22] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 17. [14:49:24] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 17. [14:49:26] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 17. [14:49:34] SINGLE -> GREEN
+ 18. [14:49:37] DOUBLE -> BLUE
+ 19. [14:49:39] SINGLE -> GREEN
+ 20. [14:49:40] DOUBLE -> BLUE
+ 21. [14:49:42] SINGLE -> GREEN
+ 22. [14:49:43] DOUBLE -> BLUE
+ 23. [14:49:43] SINGLE -> GREEN
+ 24. [14:49:50] EMPTY  -> RED
+ 25. [14:49:51] SINGLE -> GREEN
+ 26. [14:50:10] DOUBLE -> BLUE
+ 27. [14:50:10] SINGLE -> GREEN
+ 28. [14:50:10] DOUBLE -> BLUE
+ 29. [14:50:11] SINGLE -> GREEN
+ 30. [14:50:11] DOUBLE -> BLUE
+ 31. [14:50:16] SINGLE -> GREEN
+ 32. [14:50:19] DOUBLE -> BLUE
+ 33. [14:50:19] SINGLE -> GREEN
+ 34. [14:51:58] EMPTY  -> RED
+ 35. [14:51:59] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 35. [14:52:00] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 35. [14:52:01] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 35. [14:52:10] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 35. [14:53:32] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 35. [14:53:34] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+==== STAND COUNT REPORT ====
+S: 17, D: 13, E: 4
+  1. [15:05:09] EMPTY  -> RED
+  2. [15:05:19] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [15:05:20] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [15:05:24] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [15:05:24] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [15:05:29] SINGLE -> GREEN
+  3. [15:05:33] DOUBLE -> BLUE
+  4. [15:05:34] SINGLE -> GREEN
+  5. [15:05:35] DOUBLE -> BLUE
+  6. [15:05:36] SINGLE -> GREEN
+  7. [15:05:41] EMPTY  -> RED
+  8. [15:05:43] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  8. [15:05:54] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  8. [15:06:09] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  8. [15:06:14] SINGLE -> GREEN
+  9. [15:06:17] DOUBLE -> BLUE
+ 10. [15:06:18] SINGLE -> GREEN
+ 11. [15:06:24] EMPTY  -> RED
+ 12. [15:06:26] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 12. [15:06:28] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 12. [15:06:30] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 12. [15:06:45] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 12. [15:06:49] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+==== STAND COUNT REPORT ====
+S: 5, D: 3, E: 3
+  1. [15:07:47] SINGLE -> GREEN
+  2. [15:07:49] EMPTY  -> RED
+  3. [15:07:52] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [15:07:53] SINGLE -> GREEN
+  4. [15:07:55] DOUBLE -> BLUE
+  5. [15:07:55] SINGLE -> GREEN
+  6. [15:07:59] DOUBLE -> BLUE
+  7. [15:08:00] SINGLE -> GREEN
+  8. [15:08:06] EMPTY  -> RED
+  9. [15:08:07] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  9. [15:08:07] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  9. [15:08:14] SINGLE -> GREEN
+ 10. [15:08:14] DOUBLE -> BLUE
+ 11. [15:08:15] SINGLE -> GREEN
+ 12. [15:08:19] DOUBLE -> BLUE
+ 13. [15:08:20] SINGLE -> GREEN
+ 14. [15:08:25] EMPTY  -> RED
+ 15. [15:08:26] SINGLE -> GREEN
+ 16. [15:08:30] DOUBLE -> BLUE
+ 17. [15:08:32] SINGLE -> GREEN
+ 18. [15:08:33] DOUBLE -> BLUE
+ 19. [15:08:35] SINGLE -> GREEN
+ 20. [15:08:36] DOUBLE -> BLUE
+ 21. [15:08:38] SINGLE -> GREEN
+ 22. [15:08:41] EMPTY  -> RED
+ 23. [15:08:43] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 23. [15:08:47] SINGLE -> GREEN
+ 24. [15:08:54] DOUBLE -> BLUE
+ 25. [15:08:55] SINGLE -> GREEN
+ 26. [15:08:58] EMPTY  -> RED
+ 27. [15:08:59] SINGLE -> GREEN
+ 28. [15:09:04] DOUBLE -> BLUE
+ 29. [15:09:05] SINGLE -> GREEN
+ 30. [15:09:09] EMPTY  -> RED
+ 31. [15:09:09] SINGLE -> GREEN
+ 32. [15:09:12] DOUBLE -> BLUE
+ 33. [15:09:14] SINGLE -> GREEN
+ 34. [15:09:14] DOUBLE -> BLUE
+ 35. [15:09:16] SINGLE -> GREEN
+ 36. [15:09:16] DOUBLE -> BLUE
+ 37. [15:09:17] SINGLE -> GREEN
+ 38. [15:09:20] EMPTY  -> RED
+ 39. [15:09:21] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 39. [15:09:28] SINGLE -> GREEN
+ 40. [15:09:29] DOUBLE -> BLUE
+ 41. [15:09:29] SINGLE -> GREEN
+ 42. [15:09:32] EMPTY  -> RED
+ 43. [15:09:33] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 43. [15:09:39] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 43. [15:09:48] SINGLE -> GREEN
+ 44. [15:09:51] DOUBLE -> BLUE
+ 45. [15:09:58] SINGLE -> GREEN
+ 46. [15:10:01] EMPTY  -> RED
+ 47. [15:10:02] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 47. [15:10:09] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 47. [15:10:14] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 47. [15:10:31] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 47. [15:10:44] SINGLE -> GREEN
+ 48. [15:10:59] DOUBLE -> BLUE
+ 49. [15:11:00] SINGLE -> GREEN
+ 50. [15:11:00] EMPTY  -> RED
+ 51. [15:11:03] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 26, D: 15, E: 10
+  1. [15:11:59] EMPTY  -> RED
+  2. [15:12:00] SINGLE -> GREEN
+  3. [15:12:05] DOUBLE -> BLUE
+  4. [15:12:06] SINGLE -> GREEN
+  5. [15:12:11] EMPTY  -> RED
+  6. [15:12:12] SINGLE -> GREEN
+  7. [15:12:16] DOUBLE -> BLUE
+  8. [15:12:17] SINGLE -> GREEN
+  9. [15:12:23] EMPTY  -> RED
+ 10. [15:12:24] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [15:12:26] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [15:12:29] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [15:12:32] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 10. [15:12:38] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 5, D: 2, E: 3
+  1. [15:18:06] EMPTY  -> RED
+  2. [15:18:07] SINGLE -> GREEN
+  3. [15:18:12] DOUBLE -> BLUE
+  4. [15:18:14] EMPTY  -> RED
+  5. [15:18:15] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  5. [15:18:17] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  5. [15:18:18] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  5. [15:18:23] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  5. [15:18:27] SINGLE -> GREEN
+  6. [15:18:27] DOUBLE -> BLUE
+  7. [15:18:27] SINGLE -> GREEN
+  8. [15:18:32] DOUBLE -> BLUE
+  9. [15:18:34] SINGLE -> GREEN
+ 10. [15:18:34] EMPTY  -> RED
+ 11. [15:18:35] SINGLE -> GREEN
+ 12. [15:18:36] DOUBLE -> BLUE
+ 13. [15:18:37] SINGLE -> GREEN
+ 14. [15:18:38] EMPTY  -> RED
+ 15. [15:18:38] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 15. [15:18:41] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 15. [15:18:43] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 15. [15:18:45] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 15. [15:18:47] SINGLE -> GREEN
+ 16. [15:18:47] DOUBLE -> BLUE
+ 17. [15:18:47] SINGLE -> GREEN
+ 18. [15:18:48] DOUBLE -> BLUE
+ 19. [15:18:50] SINGLE -> GREEN
+ 20. [15:18:50] DOUBLE -> BLUE
+ 21. [15:18:50] EMPTY  -> RED
+ 22. [15:18:51] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [15:18:57] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [15:19:00] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [15:19:03] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [15:19:48] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [15:19:50] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [15:19:56] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [15:19:57] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 22. [15:20:01] SINGLE -> GREEN
+ 23. [15:20:03] DOUBLE -> BLUE
+ 24. [15:20:05] SINGLE -> GREEN
+ 25. [15:20:06] EMPTY  -> RED
+ 26. [15:20:07] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 26. [15:20:13] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 26. [15:20:16] SINGLE -> GREEN
+ 27. [15:20:18] DOUBLE -> BLUE
+ 28. [15:20:19] EMPTY  -> RED
+ 29. [15:20:20] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 29. [15:20:22] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 29. [15:20:24] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 29. [15:20:28] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 29. [15:20:41] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 29. [15:20:45] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 29. [15:21:06] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 29. [15:21:06] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 29. [15:21:08] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 29. [15:21:12] SINGLE -> GREEN
+ 30. [15:21:17] DOUBLE -> BLUE
+ 31. [15:21:19] SINGLE -> GREEN
+ 32. [15:21:22] EMPTY  -> RED
+ 33. [15:21:22] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+==== STAND COUNT REPORT ====
+S: 14, D: 10, E: 8
+  1. [15:26:31] DOUBLE -> BLUE
+  2. [15:26:33] SINGLE -> GREEN
+  3. [15:26:42] EMPTY  -> RED
+  4. [15:26:44] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  4. [15:26:49] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  4. [15:26:50] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  4. [15:26:54] SINGLE -> GREEN
+==== STAND COUNT REPORT ====
+S: 2, D: 1, E: 1
+  1. [16:05:37] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 0, D: 0, E: 1
+  1. [16:07:41] EMPTY  -> RED
+  2. [16:07:43] DOUBLE -> BLUE
+  3. [16:07:45] SINGLE -> GREEN
+  4. [16:07:45] EMPTY  -> RED
+  5. [16:07:47] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  5. [16:07:52] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  5. [16:07:54] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  5. [16:07:56] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  5. [16:07:59] DOUBLE -> BLUE
+  6. [16:08:01] EMPTY  -> RED
+  7. [16:08:03] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  7. [16:08:07] DOUBLE -> BLUE
+  8. [16:08:09] EMPTY  -> RED
+  9. [16:08:12] DOUBLE -> BLUE
+ 10. [16:08:14] EMPTY  -> RED
+ 11. [16:08:16] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 11. [16:08:21] DOUBLE -> BLUE
+ 12. [16:08:23] EMPTY  -> RED
+ 13. [16:08:25] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 13. [16:08:28] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 13. [16:08:30] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 13. [16:08:35] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 13. [16:08:39] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 13. [16:08:42] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 13. [16:08:45] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 13. [16:08:49] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 13. [16:08:52] DOUBLE -> BLUE
+ 14. [16:08:55] EMPTY  -> RED
+ 15. [16:08:56] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 15. [16:08:59] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 15. [16:09:03] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 15. [16:09:05] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 15. [16:09:08] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 15. [16:09:11] DOUBLE -> BLUE
+ 16. [16:09:13] EMPTY  -> RED
+ 17. [16:09:15] DOUBLE -> BLUE
+ 18. [16:09:17] EMPTY  -> RED
+ 19. [16:09:18] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 19. [16:09:20] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 19. [16:09:22] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 19. [16:09:26] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 19. [16:09:30] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 19. [16:09:33] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 19. [16:09:38] DOUBLE -> BLUE
+ 20. [16:09:39] EMPTY  -> RED
+ 21. [16:09:42] DOUBLE -> BLUE
+ 22. [16:09:44] EMPTY  -> RED
+ 23. [16:09:45] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 23. [16:09:47] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 23. [16:09:50] DOUBLE -> BLUE
+ 24. [16:09:52] EMPTY  -> RED
+ 25. [16:09:53] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 25. [16:09:55] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 25. [16:09:57] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 25. [16:10:01] DOUBLE -> BLUE
+ 26. [16:10:03] SINGLE -> GREEN
+ 27. [16:10:03] EMPTY  -> RED
+ 28. [16:10:05] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 28. [16:10:06] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 28. [16:10:10] DOUBLE -> BLUE
+ 29. [16:10:11] EMPTY  -> RED
+ 30. [16:10:13] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 30. [16:10:16] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 30. [16:10:18] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 30. [16:10:23] DOUBLE -> BLUE
+ 31. [16:10:25] EMPTY  -> RED
+ 32. [16:10:26] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 32. [16:10:29] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 32. [16:10:33] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 32. [16:10:35] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 32. [16:10:39] DOUBLE -> BLUE
+ 33. [16:10:41] EMPTY  -> RED
+ 34. [16:10:42] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 34. [16:10:44] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 34. [16:10:46] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 34. [16:10:48] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 34. [16:10:53] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+==== STAND COUNT REPORT ====
+S: 2, D: 15, E: 16
+  1. [23:00:36] SINGLE -> GREEN
+  2. [23:00:37] EMPTY  -> RED
+  3. [23:00:48] SINGLE -> GREEN
+  4. [23:00:49] DOUBLE -> BLUE
+  5. [23:00:49] SINGLE -> GREEN
+  6. [23:00:49] EMPTY  -> RED
+                                                                                     1. [23:05:22] EMPTY  -> RED
+  2. [23:05:24] SINGLE -> GREEN
+  3. [23:05:24] DOUBLE -> BLUE
+  4. [23:05:24] SINGLE -> GREEN
+  5. [23:05:25] EMPTY  -> RED
+  6. [23:05:30] SINGLE -> GREEN
+  7. [23:05:30] DOUBLE -> BLUE
+  8. [23:05:30] SINGLE -> GREEN
+  9. [23:05:31] EMPTY  -> RED
+ 10. [23:05:42] SINGLE -> GREEN
+ 11. [23:05:42] DOUBLE -> BLUE
+ 12. [23:05:43] SINGLE -> GREEN
+ 13. [23:05:43] EMPTY  -> RED
+ 14. [23:05:48] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 14. [23:05:56] SINGLE -> GREEN
+ 15. [23:05:56] DOUBLE -> BLUE
+ 16. [23:05:56] SINGLE -> GREEN
+ 17. [23:05:57] EMPTY  -> RED
+ 18. [23:06:15] SINGLE -> GREEN
+ 19. [23:06:16] DOUBLE -> BLUE
+ 20. [23:06:17] SINGLE -> GREEN
+ 21. [23:06:17] EMPTY  -> RED
+ 22. [23:06:24] SINGLE -> GREEN
+ 23. [23:06:24] DOUBLE -> BLUE
+ 24. [23:06:25] SINGLE -> GREEN
+ 25. [23:06:25] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 12, D: 6, E: 7
+  1. [23:44:39] EMPTY  -> RED
+  2. [23:45:17] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+  3. [23:45:33] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+  4. [23:45:35] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+  5. [23:45:38] SINGLE -> GREEN
+  6. [23:45:38] EMPTY  -> RED
+  7. [23:45:41] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+  8. [23:45:45] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+  9. [23:45:46] SINGLE -> GREEN
+ 10. [23:45:46] EMPTY  -> RED
+ 11. [23:45:47] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 11. [23:45:47] EMPTY  -> RED
+ 12. [23:46:10] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 12. [23:46:10] EMPTY  -> RED
+ 13. [23:46:10] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 13. [23:46:10] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 2, D: 5, E: 6
+  1. [23:46:49] EMPTY  -> RED
+  2. [23:46:52] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+  3. [23:46:52] SINGLE -> GREEN
+  4. [23:46:52] EMPTY  -> RED
+  5. [23:46:53] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+  6. [23:46:54] SINGLE -> GREEN
+  7. [23:46:54] EMPTY  -> RED
+  8. [23:46:58] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  8. [23:46:58] EMPTY  -> RED
+  9. [23:47:30] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  9. [23:47:30] EMPTY  -> RED
+ 10. [23:47:35] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+ 11. [23:47:37] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+ 12. [23:47:39] SINGLE -> GREEN
+ 13. [23:47:39] EMPTY  -> RED
+ 14. [23:47:41] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+ 15. [23:47:42] SINGLE -> GREEN
+ 16. [23:47:42] EMPTY  -> RED
+ 17. [23:47:46] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+ 18. [23:47:50] SINGLE -> GREEN
+ 19. [23:48:49] EMPTY  -> RED
+ 20. [23:49:03] DOUBLE -> BLUE
+  >> DOUBLE confirmed: (stop car + trigger camera here)
+ 21. [23:49:04] SINGLE -> GREEN
+ 22. [23:49:04] EMPTY  -> RED
+ 23. [23:49:05] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 23. [23:49:05] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 6, D: 7, E: 10
+  1. [12:40:56] EMPTY  -> RED
+  2. [12:41:02] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [12:41:02] EMPTY  -> RED
+  3. [12:41:05] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [12:41:05] EMPTY  -> RED
+  4. [12:41:07] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  4. [12:41:07] EMPTY  -> RED
+  5. [12:41:15] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+  6. [12:41:39] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  7. [12:41:40] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  8. [12:41:41] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+==== STAND COUNT REPORT ====
+S: 0, D: 4, E: 4
+  1. [12:52:29] EMPTY  -> RED
+  1. [12:54:18] EMPTY  -> RED
+  2. [12:55:54] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  2. [12:55:54] EMPTY  -> RED
+  3. [12:56:11] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  3. [12:56:11] EMPTY  -> RED
+  4. [12:56:27] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+  4. [12:56:27] EMPTY  -> RED
+  5. [12:56:29] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  6. [12:56:30] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  7. [12:57:22] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  8. [12:57:30] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+  9. [12:57:34] EMPTY  -> RED
+ 10. [12:57:37] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+ 11. [12:57:39] EMPTY  -> RED
+ 12. [12:57:42] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+ 13. [12:57:46] EMPTY  -> RED
+ 14. [12:57:50] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+ 15. [12:57:54] EMPTY  -> RED
+ 16. [12:57:56] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 16. [12:57:56] EMPTY  -> RED
+ 17. [12:58:04] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 17. [12:58:16] EMPTY  -> RED
+ 18. [12:58:17] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+ 19. [12:58:25] EMPTY  -> RED
+ 20. [12:58:28] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+ 21. [12:58:36] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+ 22. [12:58:37] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+ 23. [12:58:42] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+ 24. [12:59:03] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+ 25. [12:59:06] EMPTY  -> RED
+ 26. [12:59:18] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+ 27. [12:59:21] EMPTY  -> RED
+ 28. [12:59:24] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 28. [12:59:24] EMPTY  -> RED
+ 29. [12:59:29] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 29. [12:59:29] EMPTY  -> RED
+ 30. [12:59:38] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 30. [12:59:43] EMPTY  -> RED
+ 31. [13:00:00] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 31. [13:00:00] EMPTY  -> RED
+ 32. [13:00:18] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 32. [13:00:23] EMPTY  -> RED
+ 33. [13:00:32] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 33. [13:00:32] EMPTY  -> RED
+ 34. [13:00:43] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+ 35. [13:00:45] EMPTY  -> RED
+ 36. [13:00:47] DOUBLE -> BLUE
+  >> DOUBLE confirmed: STOP pin high
+  -- voided trailing SINGLE (double leaving frame) --
+ 37. [13:00:50] EMPTY  -> RED
+ 38. [13:01:03] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 38. [13:01:03] EMPTY  -> RED
+ 39. [13:01:06] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 39. [13:01:06] EMPTY  -> RED
+ 40. [13:01:12] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 40. [13:01:12] EMPTY  -> RED
+ 41. [13:01:18] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 41. [13:01:18] EMPTY  -> RED
+ 42. [13:01:27] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 42. [13:01:29] EMPTY  -> RED
+ 43. [13:02:21] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 43. [13:02:21] EMPTY  -> RED
+ 44. [13:02:33] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 44. [13:02:33] EMPTY  -> RED
+ 45. [13:02:34] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 45. [13:02:34] EMPTY  -> RED
+ 46. [13:05:06] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 46. [13:05:06] EMPTY  -> RED
+ 47. [13:05:11] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 47. [13:06:23] EMPTY  -> RED
+ 48. [13:06:31] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 48. [13:06:31] EMPTY  -> RED
+ 49. [13:06:33] SINGLE -> GREEN
+  -- voided transition SINGLE (frame placement) --
+ 49. [13:06:33] EMPTY  -> RED
+==== STAND COUNT REPORT ====
+S: 0, D: 16, E: 33

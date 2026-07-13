@@ -1,0 +1,25 @@
+CFLAGS=`pkg-config --cflags --libs gtk4` -Wall -Werror -Wno-deprecated-declarations -g
+
+all: lidar1
+
+lidar1: lidar1.o draw_bitmap_multiwindow.o wait_key.o import_registers.o
+	gcc lidar1.o draw_bitmap_multiwindow.o wait_key.o import_registers.o $(CFLAGS) -o lidar1 -lm -lpthread
+
+lidar1.o: lidar1.c
+	gcc $(CFLAGS) -c lidar1.c -o lidar1.o
+
+draw_bitmap_multiwindow.o: draw_bitmap_multiwindow.c
+	gcc $(CFLAGS) -c draw_bitmap_multiwindow.c -o draw_bitmap_multiwindow.o
+
+wait_key.o: wait_key.c
+	gcc $(CFLAGS) -c wait_key.c -o wait_key.o
+
+import_registers.o: ../include/import_registers.c
+	gcc $(CFLAGS) -c ../include/import_registers.c -o import_registers.o
+
+clean:
+	rm -f lidar1.o draw_bitmap_multiwindow.o wait_key.o import_registers.o lidar1
+lidar2: lidar2.o draw_bitmap_multiwindow.o wait_key.o import_registers.o
+	gcc lidar2.o draw_bitmap_multiwindow.o wait_key.o import_registers.o $(CFLAGS) -o lidar2 -lm -lpthread
+lidar2.o: lidar2.c
+	gcc $(CFLAGS) -c lidar2.c -o lidar2.o

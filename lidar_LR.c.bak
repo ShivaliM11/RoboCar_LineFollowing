@@ -1,0 +1,252 @@
+// lidar_LR.c -- TWO lidar sensors, L (/dev/ttyACM0) and R (/dev/ttyACM1)
+// Both run the same detection (row-voting, single-hold, row-7 skip, glitch void).
+// Either sensor confirming a DOUBLE raises the STOP pin (GPIO 26).
+// Terminal shows Sensor L grid on top, Sensor R grid below.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdbool.h>
+#include <time.h>
+#include "wait_key.h"
+#include "../include/import_registers.h"
+#include "../include/gpio.h"
+#include "../include/io_peripherals.h"
+
+#define LIDAR_WIDTH   8
+#define LIDAR_HEIGHT  8
+
+#define STOP_GPIO       26   // high = stop the car
+
+#define GAP_MIN              3
+#define DOUBLE_VOTES_NEEDED  3
+#define STABLE_FRAMES        3
+#define SINGLE_CONFIRM_FRAMES 50
+
+#define PLANT_THRESHOLD 127  // fixed, ~5 inch
+
+// where each sensor's block starts on the terminal
+#define L_TOP   2
+#define R_TOP   14
+#define STATUS_ROW 26
+
+struct lidar_frame_row_t { unsigned int pixel[LIDAR_WIDTH]; };
+struct lidar_frame_t     { struct lidar_frame_row_t row[LIDAR_HEIGHT]; };
+
+// one sensor's full detection state, so L and R are fully independent
+struct sensor_t
+{
+  const char *          name;
+  const char *          port;
+  FILE *                serial;
+  int                   top_row;      // terminal row where its grid prints
+  struct lidar_frame_t  frame;
+
+  int  confirmed_state;
+  int  prev_confirmed_state;
+  int  candidate_state;
+  int  candidate_count;
+  bool holding_single;
+  int  hold_frames;
+  int  hold_prev_state;
+
+  bool double_now;   // is this sensor currently seeing a double?
+};
+
+// check one row: 0=empty, 1=single, 2=double
+static int classify_row( struct lidar_frame_row_t * row, unsigned int threshold )
+{
+  bool seen_first = false;
+  int  gap_run    = 0;
+  bool gap_ok     = false;
+  bool any        = false;
+
+  for (int c = 0; c < LIDAR_WIDTH; c++)
+  {
+    bool detected = (row->pixel[c] <= threshold);
+    if (detected)
+    {
+      any = true;
+      if (seen_first && gap_ok) return 2;
+      seen_first = true;
+      gap_run    = 0;
+    }
+    else if (seen_first)
+    {
+      gap_run++;
+      if (gap_run >= GAP_MIN) gap_ok = true;
+    }
+  }
+  if (!any) return 0;
+  return 1;
+}
+
+// vote across rows, skip the last one
+static int classify_frame( struct lidar_frame_t * frame, unsigned int threshold )
+{
+  int votes[3] = { 0, 0, 0 };
+  for (int r = 0; r < LIDAR_HEIGHT - 1; r++)
+    votes[ classify_row( &frame->row[r], threshold ) ]++;
+
+  if (votes[2] >= DOUBLE_VOTES_NEEDED) return 2;
+  if (votes[1] + votes[2] > 0)         return 1;
+  return 0;
+}
+
+// read one line from a sensor (non-fatal if NULL)
+static void sensor_getline( FILE * file, char * buffer, size_t len )
+{
+  char * line = NULL;
+  size_t n = 0;
+  ssize_t got;
+  buffer[0] = '\0';
+  if (file == NULL) return;
+  got = getline( &line, &n, file );
+  if ((got > 0) && line && ((size_t)got < len))
+    strcpy( buffer, line );
+  free( line );
+}
+
+// process one serial line for a given sensor; prints its grid; updates detection
+static void sensor_step( struct sensor_t * s, char * serial_line )
+{
+  if (!((serial_line[0] == 'y') &&
+        (serial_line[1] >= '0') && (serial_line[1] <= '7') &&
+        (strlen(serial_line) > 3)))
+    return;
+
+  int r = serial_line[1] - '0';
+
+  sscanf( &serial_line[3], "%u,%u,%u,%u,%u,%u,%u,%u",
+      &s->frame.row[r].pixel[0], &s->frame.row[r].pixel[1],
+      &s->frame.row[r].pixel[2], &s->frame.row[r].pixel[3],
+      &s->frame.row[r].pixel[4], &s->frame.row[r].pixel[5],
+      &s->frame.row[r].pixel[6], &s->frame.row[r].pixel[7] );
+
+  // print this row of the detection grid (1 = within threshold)
+  printf( "\x1B[%d;1H%s %d:", s->top_row + 1 + r, s->name, r );
+  for (int c = 0; c < LIDAR_WIDTH; c++)
+    printf( " %c", (s->frame.row[r].pixel[c] <= PLANT_THRESHOLD) ? '1' : '0' );
+  printf( "\x1B[K" );
+  fflush( stdout );
+
+  if (r != (LIDAR_HEIGHT - 1)) return;   // wait for full frame
+
+  int frame_state = classify_frame( &s->frame, PLANT_THRESHOLD );
+
+  if (frame_state == s->candidate_state) s->candidate_count++;
+  else { s->candidate_state = frame_state; s->candidate_count = 1; }
+
+  if ((s->candidate_count >= STABLE_FRAMES) &&
+      (s->candidate_state != s->confirmed_state))
+  {
+    int new_state = s->candidate_state;
+
+    if (new_state == 1)
+    {
+      s->holding_single = true;
+      s->hold_frames    = 0;
+      s->hold_prev_state = s->confirmed_state;
+      s->prev_confirmed_state = s->confirmed_state;
+      s->confirmed_state = 1;
+      s->double_now = false;
+    }
+    else if (new_state == 2)
+    {
+      s->holding_single = false;
+      s->hold_frames    = 0;
+      s->prev_confirmed_state = s->confirmed_state;
+      s->confirmed_state = 2;
+      s->double_now = true;    // this sensor sees a double
+    }
+    else // empty
+    {
+      if (s->holding_single)
+      {
+        s->holding_single = false;
+        s->hold_frames    = 0;
+      }
+      s->prev_confirmed_state = s->confirmed_state;
+      s->confirmed_state = 0;
+      s->double_now = false;
+    }
+  }
+
+  if (s->holding_single)
+  {
+    s->hold_frames++;
+    if (s->hold_frames >= SINGLE_CONFIRM_FRAMES)
+    {
+      s->holding_single = false;
+      s->hold_frames    = 0;
+    }
+  }
+}
+
+int main( void )
+{
+  struct io_peripherals * io;
+  int pressed_key;
+  char serial_line[1024];
+
+  io = import_registers();
+  if (io == NULL)
+  {
+    printf("could not map I/O registers (run with sudo)\n");
+    return -1;
+  }
+
+  // STOP pin (GPIO 26) as output, start low
+  (*((volatile uint32_t *)&io->gpio->GPFSEL2)) &= ~(7 << 18);
+  (*((volatile uint32_t *)&io->gpio->GPFSEL2)) |=  (1 << 18);
+  GPIO_CLR( io->gpio, STOP_GPIO );
+
+  struct sensor_t L = {0};
+  struct sensor_t R = {0};
+  L.name = "L"; L.port = "/dev/ttyACM0"; L.top_row = L_TOP;
+  R.name = "R"; R.port = "/dev/ttyACM1"; R.top_row = R_TOP;
+  L.confirmed_state = L.prev_confirmed_state = L.candidate_state = -1;
+  R.confirmed_state = R.prev_confirmed_state = R.candidate_state = -1;
+  L.hold_prev_state = R.hold_prev_state = -1;
+
+  L.serial = fopen( L.port, "r" );
+  R.serial = fopen( R.port, "r" );
+  if (L.serial == NULL) printf("Sensor L: cannot open %s\n", L.port);
+  if (R.serial == NULL) printf("Sensor R: cannot open %s\n", R.port);
+
+  printf( "\x1B[2J\x1B[H\x1B[?25l" );
+  printf( "\x1B[%d;1H=== Sensor L (%s) ===\x1B[K", L_TOP, L.port );
+  printf( "\x1B[%d;1H=== Sensor R (%s) ===\x1B[K", R_TOP, R.port );
+  fflush( stdout );
+
+  while ( !wait_key( 1, &pressed_key ) )
+  {
+    // service L
+    sensor_getline( L.serial, serial_line, sizeof(serial_line) );
+    sensor_step( &L, serial_line );
+
+    // service R
+    sensor_getline( R.serial, serial_line, sizeof(serial_line) );
+    sensor_step( &R, serial_line );
+
+    // either sensor seeing a double -> STOP
+    bool stop = L.double_now || R.double_now;
+    if (stop) GPIO_SET( io->gpio, STOP_GPIO );
+    else      GPIO_CLR( io->gpio, STOP_GPIO );
+
+    printf( "\x1B[%d;1HL:%s  R:%s  STOP:%s\x1B[K",
+        STATUS_ROW,
+        L.confirmed_state==2?"DOUBLE":L.confirmed_state==1?"single":"empty ",
+        R.confirmed_state==2?"DOUBLE":R.confirmed_state==1?"single":"empty ",
+        stop ? "YES" : "no " );
+    fflush( stdout );
+  }
+
+  printf( "\x1B[?25h\x1B[%d;1H\n", STATUS_ROW + 2 );
+  if (L.serial) fclose( L.serial );
+  if (R.serial) fclose( R.serial );
+  GPIO_CLR( io->gpio, STOP_GPIO );
+  return 0;
+}
